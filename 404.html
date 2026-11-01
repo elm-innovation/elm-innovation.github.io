@@ -605,6 +605,14 @@ a bdi{overflow-wrap:anywhere}
 [data-cv="5"] .b-needle .nn{transform:scaleX(.6)}[data-cv="5"] .b-needle .ns{transform:scaleX(.6)}
 
 </style>
+<style>
+/* حساب التجربة: اختيار الأسبوع تحت البوصلة في الرئيسية */
+.b-wk-pick{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--s6);margin-bottom:var(--s12)}
+@media (min-width:900px){.b-wk-pick{justify-content:flex-start}}
+.b-wk-pick .b-chip{min-height:44px;gap:var(--s4);font-size:var(--fs-small);background:rgba(5,29,73,.6)}
+.b-wk-pick .b-chip[aria-pressed=true]{background:var(--light);color:var(--navy);border-color:var(--light)}
+.b-wk-pick .b-chip svg{width:16px;height:16px}
+</style>
 <style data-view="intro" media="not all">
 /* تعريف الأسبوع الأول = designs/W1-intro2/ring0/src.html (المعتمد): الخطوة 0 بطاقة «أين يذهب أسبوعك؟» مع التقويم الذي يمتلئ، ثم «الحلقة» 4 خطوات. بلا «للتجربة فقط». يُفعَّل مع شاشة intro فقط */
 :root{--h1:#BDC9E9;--h2:#FFA168;--h3:#763CBC;--h1-on:#051D49;--h2-on:#051D49;--h3-on:#F7F8FC;--split:380ms}
@@ -1634,6 +1642,10 @@ Object.assign(window.BOSLA_COPY, {
   'open.w3': 'الأسبوع الثالث: «بعيون المستفيد»، مفتوح حتى نهاية السبت 28 نوفمبر.',
   'open.w4': 'الأسبوع الأخير: «فشل البرنامج التدريبي»، مفتوح حتى نهاية السبت 5 ديسمبر.',
 
+  /* حساب التجربة (طلب نادر 1 نوفمبر): اختيار أي أسبوع من الرئيسية، و«إعادة التجربة» في النتيجة والشكر */
+  'test.pick': 'اختر أسبوعًا للتجربة',
+  'test.restart': 'إعادة التجربة',
+
   /* الحفظ التلقائي في النشاط (PATTERNS.md · الحالات المشتركة). {week} = «الأسبوع الأول»… */
   'save.auto': 'يُحفظ تلقائيًا',
   'save.busy': 'نحفظ…',
@@ -2001,12 +2013,12 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
     function wkTitle(n) { const t = T('home.week' + n), i = t.indexOf('·'); return i < 0 ? esc(t) : `<span class="b-wk-k">${esc(t.slice(0, i).trim())}</span><span class="b-vh"> · </span><span class="b-wk-name">${esc(t.slice(i + 1).trim())}</span>`; }
     /* حالة الأسبوع الحالي من الخادم (app.js): soon قبل الأحد 8 نوفمبر، ثم open لكل أسبوع حتى الأحد التالي، وبعد 6 ديسمبر closed */
     const wkOf = s => s.week || { week: 1, state: s.weekOpen ? 'open' : 'soon' };
-    const sigOf = s => { const w = wkOf(s); return [w.week, w.state, !!w.done, !!w.draft, (w.weeks || []).map(x => x.done ? 1 : 0).join(''), s.leader && s.leader.gender].join('|'); };
+    const sigOf = s => { const w = wkOf(s); return [w.week, w.state, !!w.done, !!w.draft, !!w.test, (w.weeks || []).map(x => x.done ? 1 : 0).join(''), s.leader && s.leader.gender].join('|'); };
     function buildHome(s) {
       const w = wkOf(s), n = w.week || 1, end = App.endDay(n);
       const doneW = (w.weeks || []).filter(x => x.done).map(x => x.week);
       if (w.done && !doneW.includes(n)) doneW.push(n);
-      const fin = w.done || w.state === 'closed';
+      const fin = !w.test && (w.done || w.state === 'closed');   /* حساب التجربة: الرئيسية نفسها دائمًا، مع اختيار الأسبوع */
       /* البوصلة: الإبرة على الأسبوع الحالي؛ بعد إنهائه تدور إلى التالي (والأخير يبقى عليه) */
       bz.compass(fin && n < 4 ? { current: n + 1, done: doneW, from: n } : { current: n, done: doneW }); home.classList.toggle('has-compass', !fin);
       let line, note = '', go = '';
@@ -2033,7 +2045,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
     <div class="b-wk" role="group" aria-labelledby="wkt" data-week="${n}">
       <p class="b-wk-t" id="wkt">${wkTitle(n)}</p>
       <p class="b-wk-w">${line}</p>${go}</div>
-    <div class="b-home-low">${note ? `<p class="b-wk-n">${esc(note)}</p>` : ''}
+    <div class="b-home-low">${w.test ? `<div class="b-wk-pick" role="group" aria-label="${esc(T('test.pick'))}">${[1, 2, 3, 4].map(k => `<button type="button" class="b-chip" data-pick="${k}" aria-pressed="${k === n}">${esc(App.weekLabel(k))}${doneW.includes(k) ? ICON.check : ''}</button>`).join('')}</div>` : ''}${note ? `<p class="b-wk-n">${esc(note)}</p>` : ''}
       <button type="button" class="b-link" data-act="about">${esc(T('home.about'))}</button></div>`;
       homeSig = sigOf(s);
     }
@@ -2053,6 +2065,9 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
       if (!hostEl.contains(e.target)) return;
       const eye = e.target.closest('[data-eye]');
       if (eye) { const f = document.getElementById(eye.dataset.eye), onn = f.type === 'password'; f.type = onn ? 'text' : 'password'; eye.setAttribute('aria-pressed', String(onn)); eye.setAttribute('aria-label', T(onn ? 'field.hide' : 'field.show')); eye.innerHTML = onn ? ICON.eyeOff : ICON.eye; return; }
+      const pk = e.target.closest('[data-pick]');
+      if (pk) { const k = +pk.dataset.pick, w = wkOf(Bosla.state); hostEl.querySelectorAll('[data-pick]').forEach(b => b.setAttribute('aria-pressed', String(b === pk)));
+        bz.compass({ current: k, done: (w.weeks || []).filter(x => x.done).map(x => x.week), from: w.week }); after(reducedMQ.matches ? 0 : 650, () => App.openWeekN(k)); return; }
       const a = e.target.closest('[data-act]');
       if (a) { const k = a.dataset.act; if (k === 'forgot') Bosla.act.forgot(); else if (k === 'sendLink') Bosla.act.sendLink({ email: val('email').trim() }); else if (k === 'about') Bosla.act.about(); else if (k === 'leave') Bosla.act.goGeneric(); else if (k === 'week') App.openWeek(); return; }
       const p = e.target.closest('button[data-primary][type=button]');
@@ -2467,11 +2482,14 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
     <textarea class="w-ta" id="ta" aria-labelledby="wq" aria-describedby="wg" maxlength="2000" placeholder="${esc(C.placeholder)}" data-r="field">${esc(st.text)}</textarea>
   </div></section>`;
     }
+    /* حساب التجربة: رابط هادئ «إعادة التجربة» تحت النتيجة والشكر */
+    const againLink = () => W.test ? `<button type="button" class="b-link w-show w-again b-rise" style="--i:2;align-self:center" data-act="restart">${esc(Bosla.t('test.restart'))}</button>` : '';
+    const withAgain = h => h.replace(/<\/section>$/, againLink() + '</section>');
     function build() {
-      if (n === 4) return w4HTML();
+      if (n === 4) return st.s === 'done' ? withAgain(w4HTML()) : w4HTML();
       if (st.s === 'intro') return introHTML();
       if (st.s === 'q1' || st.s === 'q2') return question(+st.s[1]);
-      return resultHTML();
+      return withAgain(resultHTML());
     }
     const autos = '<p class="b-status q-autos" id="autos" role="status"></p>';
     function footHTML() {
@@ -2604,6 +2622,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
       const a = e.target.closest('[data-act]'); if (!a || a.disabled || !hostEl.contains(a)) return;
       const k = a.dataset.act, i = SCREENS.indexOf(st.s);
       if (k === 'send') return sendReply();
+      if (k === 'restart') { a.disabled = true; ro = true; clearTimeout(saveT); App.restartWeek(n).catch(() => { a.disabled = false; setKind('server'); }); return; }
       if (k === 'more') { st.s = 'ask'; render(true, true); const t = $('#ta'); if (t) t.focus(); return; }
       if (k === 'finish') { flush(); return App.home(); }   /* W3: إنهاء النشاط ← الرئيسية */
       if (k === 'show') { if (st.s === 'q2') return submitQA(); if (hasResult()) go('result'); return; }
@@ -3224,7 +3243,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
 
   /* ---------- الأسبوع الحالي للقائد ---------- */
   let week = null, weekFor = null, weekBusy = null;
-  const summary = w => ({ week: w.week, state: w.state, done: !!w.done, draft: !!(w.draft || w.started), weeks: w.weeks || [] });
+  const summary = w => ({ week: w.week, state: w.state, done: !!w.done, draft: !!(w.draft || w.started), weeks: w.weeks || [], test: !!w.test });
   function leader() {
     const L = Bosla.state.leader || {};
     return { first: L.first || '', gender: L.gender === 'f' ? 'f' : 'm', email: L.email || '', dept: (week && week.dept) || DATA.CALENDAR.def };
@@ -3257,14 +3276,30 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
   }
   /* زر الأسبوع في الرئيسية: الأسبوع الأول يبدأ بالتعريف والحلقة، والبقية تعريفها داخل النشاط.
      الأسبوع المقفل لا يُفتح (والخادم يرفض أي حفظ فيه) */
+  /* يفتح شاشة الأسبوع w (intro للأول قبل بدئه، وإلا النشاط). يعيد true إن لم يبدأ بعد (فيُسجَّل «فتح») */
+  function enter(w, how) {
+    const n = w.week;
+    if (n === 1 && !w.done && !(w.draft || w.started)) { show('intro', { week: 1 }, how || 'push'); return true; }
+    show('activity', { week: n }, how || 'push');
+    return !w.done && !w.started;
+  }
   function openWeek(again) {
     const w = week;
     if (!w && !again) { loadWeek(false).then(() => openWeek(true), () => {}); return; }   /* ضغط قبل وصول حالة الأسبوع من الخادم */
     if (!w || w.state !== 'open') return;
-    const n = w.week;
-    if (n === 1 && !w.done && !(w.draft || w.started)) { show('intro', { week: 1 }, 'push'); loadWeek(true).catch(() => {}); return; }
-    show('activity', { week: n }, 'push');
-    if (!w.done && !w.started) loadWeek(true).catch(() => {});
+    if (enter(w)) loadWeek(true).catch(() => {});
+  }
+  /* حساب التجربة: يفتح أي أسبوع (1..4) في أي وقت. how='replace' بعد «إعادة التجربة» */
+  function openWeekN(n, how) {
+    return api('week', Object.assign(auth(), { week: n, open: true })).then(w => {
+      if (w.state !== 'open') return;
+      week = w; enter(w, how);
+    }, e => { if (e.code === 'auth' || e.code === 'badlink') reauth(); });
+  }
+  /* «إعادة التجربة»: يمسح الأسبوع في الخادم (حساب التجربة فقط) ويبدأه من جديد */
+  function restartWeek(n) {
+    try { localStorage.removeItem('bosla.draft.v1'); localStorage.removeItem('bosla.submit.v1'); } catch (e) {}
+    return api('restart', Object.assign(auth(), { week: n })).then(() => openWeekN(n, 'replace'));
   }
   function home() {
     show('entry', {}, 'push');
@@ -3322,7 +3357,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
     if (s.screen === 'home' && s.leader && s.token && weekFor !== s.token) loadWeek(false).catch(() => {});
   }
 
-  window.App = { cfg: CFG, defaults: DEFAULTS, api, auth, tx, cal, wk, wkTexts, wkDefaults, leader, loadWeek, openWeek, home, show, adminApi, adminOut,
+  window.App = { cfg: CFG, defaults: DEFAULTS, api, auth, tx, cal, wk, wkTexts, wkDefaults, leader, loadWeek, openWeek, openWeekN, restartWeek, home, show, adminApi, adminOut,
     now, stateOf, currentWeek, endDay, schedule: SCHEDULE, weekLabel: n => WEEK_LABEL[n - 1],
     get week() { return week; }, set week(w) { week = w; }, get view() { return viewName; }, data: DATA };
 
