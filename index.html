@@ -688,9 +688,11 @@ a bdi{overflow-wrap:anywhere}
 .x-sw[data-h="1"]{background:var(--h1);color:var(--h1-on)}
 .x-sw[data-h="2"]{background:var(--h2);color:var(--h2-on)}
 .x-sw[data-h="3"]{background:var(--h3);color:var(--h3-on);box-shadow:inset 0 0 0 1px rgba(247,248,252,.5)}
-.x-name{margin-top:var(--s6);font-size:20px;font-weight:var(--fw-bold);line-height:1.35;text-wrap:balance}
+.x-name{margin-top:var(--s6);font-size:21px;font-weight:var(--fw-bold);line-height:1.35;text-wrap:balance}
 .x-rule{margin-top:var(--s4);font-size:var(--fs-small);font-weight:var(--fw-medium);line-height:1.5;color:var(--ink2);text-wrap:balance}
-.x-ex{margin-top:var(--s10);font-size:var(--fs-small);line-height:1.6;color:var(--ink);text-wrap:balance}
+.x-ex{margin-top:var(--s2);font-size:var(--fs-small);line-height:1.6;color:var(--ink);text-wrap:balance}
+.x-exbox{margin-top:var(--s12);padding:var(--s8) var(--s12);border-radius:var(--r-field);background:rgba(247,248,252,.07);border:1px solid var(--edge);max-width:100%}
+.x-exk{font-size:12px;line-height:1.5;color:var(--accent);font-weight:var(--fw-medium)}
 /* الختام داخل الحلقة: المستقبل أعلى (عند الشمال)، والحاضر أسفل */
 .x-legend{display:flex;align-items:center;gap:var(--s8)}.x-legend .x-sw{width:30px;height:30px;font-size:14px}.x-bar{width:0;height:26px;border-inline-start:1.5px dashed var(--edge-field);margin:0 var(--s6)}
 .x-key{display:flex;flex-direction:column;align-items:center;gap:var(--s14)}
@@ -718,7 +720,8 @@ a bdi{overflow-wrap:anywhere}
   .x-k{font-size:var(--fs-label)}
   .x-name{font-size:30px;line-height:1.3;margin-top:var(--s10)}
   .x-rule{font-size:18px;margin-top:var(--s6)}
-  .x-ex{font-size:19px;line-height:1.65;margin-top:var(--s14)}
+  .x-ex{font-size:19px;line-height:1.65}
+  .x-exbox{margin-top:var(--s16);padding:var(--s12) var(--s16)}.x-exk{font-size:14px}
   .x-title{top:var(--s32);line-height:44px;font-size:24px}
   .x-lbl{font-size:26px}.x-lbl svg{width:32px;height:32px}.x-lbl i{width:34px}
   .x-key{gap:var(--s20)}.x-key p{font-size:26px}.x-key svg{width:40px;height:40px}.x-key hr{width:80px}
@@ -2208,21 +2211,22 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
     document.title = 'بوصلة القائد · الأسبوع الأول';
 
     const H = [
-      { k: 'الأفق الأول', name: 'تطوير الأعمال الحالية', rule: 'نفس المستفيد، ولو بتقنية جديدة', ex: 'تصريح أسرع للحاج، بخطوات أقل' },
-      { k: 'الأفق الثاني', name: 'التوسع في فرص مجاورة', rule: 'قدرة نملكها لمستفيد جديد', ex: 'محرك التصاريح نفسه لمنظّمي الفعاليات الكبرى' },
-      { k: 'الأفق الثالث', name: 'بناء أعمال المستقبل', rule: 'نموذج عمل لم يثبت بعد', ex: 'بيع تحليلات حركة الزوار لقطاع السياحة' }];
+      /* نصوص الحلقة المبسطة (اعتمدها نادر 2 نوفمبر): سطر صغير «الأفق · الزمن»، وجملة واضحة، ومثال من أعمال القائد في مربع */
+      { k: 'الأفق الأول', when: 'اليوم', name: 'نحسّن ما نقدمه اليوم', ex: 'تصريح أسرع للحاج، بخطوات أقل' },
+      { k: 'الأفق الثاني', when: 'قريبًا', name: 'نصل لعملاء جدد، أو نقدّم خدمة جديدة', ex: 'محرك التصاريح نفسه لمنظّمي الفعاليات الكبرى' },
+      { k: 'الأفق الثالث', when: 'المستقبل', name: 'نبني شيئًا لم يوجد بعد', ex: 'بيع تحليلات حركة الزوار لقطاع السياحة' }];
     /* أمثلة الآفاق من إدارة القائد (planning/CALENDAR.json → ring، بعد تعديلات الأدمن المعتمدة) */
     const CD = App.cal(), LD = App.leader();
     const DEPT = CD.depts.find(d => d.k === LD.dept) || CD.depts.find(d => d.k === CD.def);
     DEPT.ring.forEach((x, i) => H[i].ex = x);
     const tx = (k, m) => App.tx(k, LD.gender, m);
     const W = App.wk(1, LD.gender), INTRO = { title: W.title, p1: W.intro.p1, p2: W.intro.p2 };   /* الخطوة 0 */
-    const T = { next: 'التالي', prev: 'السابق', go: 'تابع', now: 'الحاضر', fut: 'المستقبل',
+    const T = { exK: 'مثال من أعمالك', next: 'التالي', prev: 'السابق', go: 'تابع', now: 'الحاضر', fut: 'المستقبل',
       of: n => `الأفق ${['الأول', 'الثاني', 'الثالث'][n - 1]} من ثلاثة`,
       say: [INTRO.title + '. ' + INTRO.p1 + ' ' + INTRO.p2,
-        tx('w1.intro.1', 'الأفق الأول، تطوير الأعمال الحالية: نفس المستفيد، ولو بتقنية جديدة. يملأ الحلقة كلها.') + ' مثال: ' + H[0].ex + '.',
-        tx('w1.intro.2', 'الأفق الثاني، التوسع في فرص مجاورة: قدرة نملكها لمستفيد جديد. يأخذ نحو ثلث الحلقة من جهة الشمال.') + ' مثال: ' + H[1].ex + '.',
-        tx('w1.intro.3', 'الأفق الثالث، بناء أعمال المستقبل: نموذج عمل لم يثبت بعد. يأخذ عُشر الحلقة عند الشمال.') + ' مثال: ' + H[2].ex + '.',
+        'الأفق الأول، اليوم: ' + H[0].name + '. يملأ الحلقة كلها.' + ' مثال من أعمالك: ' + H[0].ex + '.',
+        'الأفق الثاني، قريبًا: ' + H[1].name + '. يأخذ نحو ثلث الحلقة من جهة الشمال.' + ' مثال من أعمالك: ' + H[1].ex + '.',
+        'الأفق الثالث، المستقبل: ' + H[2].name + '. يأخذ عُشر الحلقة عند الشمال.' + ' مثال من أعمالك: ' + H[2].ex + '.',
         tx('w1.intro.4', 'الأفق الأول هو الحاضر، والأفقان الثاني والثالث معًا هما المستقبل.')] };
     const arrow = I('<path d="M15 5l-7 7 7 7"/>', 18);
     const IC = { now: I('<path d="M12 22V10"/><path d="M12 10C10 7 6.5 6.4 3.5 8"/><path d="M12 10c2-3 5.5-3.6 8.5-2"/><path d="M12 10C11 6.6 8.6 4.4 5.6 3.8"/><path d="M12 10c1-3.4 3.4-5.6 6.4-6.2"/><path d="M10.2 12.6h3.6M10.6 14.6h2.8"/><path d="M8 22h8"/>', 24),
@@ -2286,10 +2290,9 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
       if (step === 4) return `<div class="x-legend b-rise" style="--i:0" aria-hidden="true"><span class="x-sw" data-h="1">1</span><span class="x-bar"></span><span class="x-sw" data-h="2">2</span><span class="x-sw" data-h="3">3</span></div>
     <p class="b-vh" id="h" tabindex="-1">${esc(T.say[4])}</p>`;
       const h = H[step - 1];
-      return `<p class="x-k b-rise" style="--i:0"><span class="x-sw" data-h="${step}" aria-hidden="true">${step}</span><span class="b-vh">${esc(T.of(step))}</span></p>
+      return `<p class="x-k b-rise" style="--i:0"><span class="x-sw" data-h="${step}" aria-hidden="true">${step}</span><span>${esc(h.k)} · ${esc(h.when)}</span></p>
     <h2 class="x-name b-rise" style="--i:1" id="h" tabindex="-1">${esc(h.name)}</h2>
-    <p class="x-rule b-rise" style="--i:1">${esc(h.rule)}</p>
-    <p class="x-ex b-rise" style="--i:2">${esc(h.ex)}</p>`;
+    <div class="x-exbox b-rise" style="--i:2"><p class="x-exk">${esc(T.exK)}</p><p class="x-ex">${esc(h.ex)}</p></div>`;
     }
     function footHTML() {
       const last = step === 4;
