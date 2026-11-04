@@ -189,6 +189,8 @@ a bdi{overflow-wrap:anywhere}
 
 
 .b-bezel{position:fixed;z-index:var(--z-bezel);left:calc(var(--cx) - var(--d) / 2);top:calc(var(--cy) - var(--d) / 2);width:var(--d);height:var(--d);pointer-events:none}
+.b-bezel.b-flow{position:absolute;transition:left 500ms var(--ease-out),top 500ms var(--ease-out),width 500ms var(--ease-out),height 500ms var(--ease-out)}   
+@media (prefers-reduced-motion:reduce){.b-bezel.b-flow{transition:none}}
 .b-bezel--inline{position:relative;left:auto;top:auto;flex:none}  
 .b-lens{position:absolute;inset:0;border-radius:50%;background:var(--lens);border:1px solid var(--edge-ring);
   -webkit-backdrop-filter:var(--blur-lens);backdrop-filter:var(--blur-lens);box-shadow:var(--shadow-lens)}
@@ -573,14 +575,13 @@ a bdi{overflow-wrap:anywhere}
 .b-ring .dn.done{fill:var(--ink)}
 
 .b-home.has-compass .b-wk{top:calc(var(--cy) + var(--d) / 2 + 18px);translate:-50% 0;width:min(380px,calc(100% - 32px))}
-.b-home.has-compass .b-home-low{top:calc(var(--cy) + var(--d) / 2 + 192px)}
-@media (max-height:720px){.b-home.has-compass .b-wk{top:calc(var(--cy) + var(--d) / 2 + 10px)}.b-home.has-compass .b-wk .b-wk-go{margin-top:var(--s8)}.b-home.has-compass .b-home-low{top:calc(var(--cy) + var(--d) / 2 + 170px)}}
+.b-home.has-compass .b-home-low{top:calc(var(--cy) + var(--d) / 2 + 18px + var(--wkh,174px) + 12px)}   
 
 @media (min-width:900px){
-  .b-home.has-compass .b-wk{left:calc(var(--cx) + var(--d) / 2 + 64px);top:var(--cy);translate:0 -60%;width:360px;text-align:start}
-  .b-home.has-compass .b-wk .b-wk-t{align-items:flex-start}.b-home.has-compass .b-wk .b-wk-w{justify-content:flex-start}.b-home.has-compass .b-wk-go .b-btn{margin-inline:0}
-  .b-home.has-compass .b-home-low{left:calc(var(--cx) + var(--d) / 2 + 64px);top:calc(var(--cy) + 70px);translate:0 0;width:360px;align-items:flex-start;text-align:start}
-  .b-home.has-compass .b-home-h{left:calc(var(--cx) + var(--d) / 2 + 64px);translate:0 0;bottom:calc(100% - var(--cy) + 130px);width:auto;text-align:start}
+  .b-home.has-compass .b-wk{left:calc(var(--cx) + var(--d) / 2 + 64px);top:var(--wy,var(--cy));translate:0 0;width:360px;text-align:start}
+  .b-home.has-compass .b-home-low .b-link{align-self:flex-start;padding-inline:0}.b-home.has-compass .b-wk .b-wk-t{align-items:flex-start}.b-home.has-compass .b-wk .b-wk-w{justify-content:flex-start}.b-home.has-compass .b-wk-go .b-btn{margin-inline:0}
+  .b-home.has-compass .b-home-low{left:calc(var(--cx) + var(--d) / 2 + 64px);top:var(--ly,calc(var(--cy) + 70px));translate:0 0;width:360px;align-items:flex-start;text-align:start}
+  .b-home.has-compass .b-home-h{left:calc(var(--cx) + var(--d) / 2 + 64px);translate:0 0;top:var(--hy,auto);bottom:auto;width:360px;text-align:start}   
 }
 @media (prefers-reduced-motion:reduce){.b-needle{transition:none}}
 
@@ -604,6 +605,17 @@ a bdi{overflow-wrap:anywhere}
 [data-cv="5"] .b-bezel.has-compass .b-ring .t1,[data-cv="5"] .b-bezel.has-compass .b-ring .t2,[data-cv="5"] .b-bezel.has-compass .b-ring .band{display:none}
 [data-cv="5"] .b-needle .nn{transform:scaleX(.6)}[data-cv="5"] .b-needle .ns{transform:scaleX(.6)}
 
+.b-journey{position:fixed;z-index:var(--z-stage);top:calc(var(--sa-t) + 64px);left:0;right:0;margin:0 auto;padding:0 12px;width:max-content;max-width:100%;
+  display:flex;align-items:center;justify-content:center;gap:6px;list-style:none;pointer-events:none}
+.b-journey li{display:flex;align-items:center;gap:6px;font-size:13px;line-height:1.4;color:var(--ink2);white-space:nowrap;text-shadow:var(--text-shadow-lg)}
+.b-journey li+li::before{content:"";width:12px;height:1px;background:var(--edge-field);flex:none}
+.b-journey b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink2);font-size:12px;font-weight:var(--fw-bold);line-height:1;background:rgba(5,29,73,.55)}
+.b-journey li.done{color:var(--ink)}.b-journey li.done b{background:var(--ink2);border-color:var(--ink2);color:var(--navy)}
+.b-journey li.now{color:var(--ink);font-weight:var(--fw-bold)}.b-journey li.now b{border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 3px rgba(255,161,104,.18)}
+.b-journey li.next{color:var(--accent);font-weight:var(--fw-medium)}.b-journey li.next b{border-color:var(--accent);color:var(--accent)}
+@media (max-width:359px){.b-journey{gap:4px}.b-journey li{font-size:12px;gap:4px}.b-journey li+li::before{width:6px}.b-journey b{width:20px;height:20px}}
+@media (min-width:900px){.b-journey{top:calc(var(--sa-t) + 96px);gap:10px}.b-journey li{font-size:15px;gap:8px}.b-journey li+li::before{width:28px}.b-journey b{width:26px;height:26px;font-size:13px}}
+
 </style>
 <style>
 /* حساب التجربة: اختيار الأسبوع تحت البوصلة في الرئيسية */
@@ -614,92 +626,60 @@ a bdi{overflow-wrap:anywhere}
 .b-wk-pick .b-chip svg{width:16px;height:16px}
 </style>
 <style data-view="intro" media="not all">
-/* تعريف الأسبوع الأول = designs/W1-intro2/ring0/src.html (المعتمد): الخطوة 0 بطاقة «أين يذهب أسبوعك؟» مع التقويم الذي يمتلئ، ثم «الحلقة» 4 خطوات. بلا «للتجربة فقط». يُفعَّل مع شاشة intro فقط */
-:root{--h1:#BDC9E9;--h2:#FFA168;--h3:#763CBC;--h1-on:#051D49;--h2-on:#051D49;--h3-on:#F7F8FC;--split:380ms}
-/* الحلقة: الحزام والتدريج تحت الألوان، والمؤشر الثابت فوقها */
-.b-bezel{z-index:var(--z-bezel)}
-.b-ring .t1,.b-ring .t2,.b-ring .t3,.b-ring .north{display:none}
-.x-donut{position:absolute;inset:-6%;width:112%;height:112%;overflow:visible}
-.x-donut circle.a{fill:none;stroke-width:17}
-.x-a1{stroke:var(--h1)}.x-a2{stroke:var(--h2)}.x-a3{stroke:var(--h3)}
-.x-cov2{stroke:var(--h1)}.x-cov3{stroke:var(--h2)}
-.x-rot{transform-box:view-box;transform-origin:0 0;transition:transform var(--split) var(--ease-out),opacity var(--dur-ui) var(--ease-out)}
-.x-sep{stroke:var(--navy);stroke-width:3;transition:opacity var(--dur-ui) var(--ease-out)}
-/* تدريج خفيف فوق الألوان: الحلقة تبقى بوصلة */
-.x-tick{stroke:rgba(5,29,73,.28);stroke-width:1}
-.x-num{display:none;transform-box:fill-box;transform-origin:center;transition:transform var(--split) var(--ease-out);font:600 11px var(--font);text-anchor:middle;dominant-baseline:central}
-.x-num[data-h="1"]{fill:var(--h1-on)}.x-num[data-h="2"]{fill:var(--h2-on)}.x-num[data-h="3"]{fill:var(--h3-on)}
-/* تعتيم الأقواس غير الحالية: بؤرة واحدة في كل خطوة (opacity فقط) */
-.x-dim{display:none}
-.x-hl{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;opacity:.95;transition:opacity var(--split) var(--ease-out)}
-.is-final .x-hl{opacity:0}
-/* القوسان الخارجيان في الختام: الحاضر متصل، المستقبل متقطع */
-.x-br{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;opacity:0;transition:opacity var(--dur-ui) var(--ease-out) 140ms}
-.x-br.fut{stroke:url(#futg);stroke-width:2.4;stroke-dasharray:7 6}
-.is-final .x-br{opacity:1}
-/* تسميتا الختام خارج الحلقة (طلب نادر): الحاضر خط متصل، والمستقبل بالخوخي وخط متقطع */
-.x-lbl{position:fixed;z-index:var(--z-stage);translate:-50% -50%;display:flex;align-items:center;gap:var(--s8);margin:0;font-size:20px;font-weight:var(--fw-bold);line-height:1.3;white-space:nowrap;
-  text-shadow:var(--text-shadow-lg);opacity:0;transition:opacity var(--dur-ui) var(--ease-out) 160ms;pointer-events:none}
-.x-lbl svg{width:26px;height:26px;flex:none}
-.x-lbl i{display:inline-block;width:26px;height:0;border-top:2.4px solid currentColor}
-.x-lbl.fut{color:#D9A9E6}.x-lbl.fut span{background:linear-gradient(90deg,#B98BEF,#FFA168);-webkit-background-clip:text;background-clip:text;color:transparent}
-.x-lbl.fut i{border-top-style:dashed;border-top-color:#D9A9E6}
-.x-lbl.now{color:var(--ink)}.x-lbl.now svg{color:var(--ink2)}
-.is-final~.x-lbl,.x-lbl.on{opacity:1}
-/* العنوان: سطر واحد هادئ تحت الشعار */
-.x-title{position:fixed;z-index:var(--z-stage);top:calc(var(--sa-t) + 66px);left:0;right:0;margin:0;text-align:center;font-size:22px;font-weight:var(--fw-medium);line-height:1.4;white-space:nowrap;color:var(--ink);text-shadow:var(--text-shadow-lg)}
+/* تعريف الأسبوع الأول (اعتمده نادر 4 نوفمبر): بطاقة واحدة بمقاس ثابت في الخطوات الخمس، وتقويم يتلوّن.
+ * لكل أفق لون ثابت: الأول أزرق فاتح، والثاني خوخي، والثالث بنفسجي فاتح. لا تباعد بين الحروف العربية. */
+:root{--hz1:#BDC9E9;--hz2:#FFA168;--hz3:#D9A9E6;--hz-dim:rgba(189,201,233,.14)}
 
-/* ---- الخطوة 0 (طلب نادر 1 نوفمبر): مقدمة النشاط نصًا وحده بلا حلقة، ثم تظهر الحلقة في الخطوة 1 لتشرح الآفاق ---- */
-.x-intro{position:fixed;z-index:var(--z-stage);left:50%;top:50%;translate:-50% -50%;width:min(560px,calc(100vw - 32px));padding:var(--s24) var(--s20) var(--s20);border-radius:var(--r-card);
+#ringUI{position:relative;z-index:var(--z-stage);min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:calc(var(--sa-t) + 112px) calc(var(--sa-r) + 16px) calc(var(--sa-b) + 150px) calc(var(--sa-l) + 16px)}
+
+/* البطاقة: عرض ثابت، وارتفاع أطول خطوة (اللوحات متراكبة في خلية واحدة) */
+.x-card{position:relative;width:min(860px,100%);display:grid;gap:18px;padding:var(--s20);border-radius:var(--r-card);
   background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.02) 38%),linear-gradient(rgba(5,29,73,.50),rgba(5,29,73,.62));
-  -webkit-backdrop-filter:blur(26px) saturate(150%);backdrop-filter:blur(26px) saturate(150%);border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 20px 50px rgba(2,10,30,.45);
-  transition:opacity var(--dur-ui) var(--ease-out)}
-.x-intro h2{font-size:var(--fs-display);font-weight:var(--fw-bold);line-height:var(--lh-display);margin-bottom:var(--s10)}
-.x-intro p{font-size:var(--fs-body);font-weight:var(--fw-medium);line-height:var(--lh-body);color:var(--ink);text-wrap:pretty}
-.x-intro p+p{margin-top:var(--s10);font-weight:var(--fw-regular);color:var(--ink2)}
-.x-intro[hidden]{display:block;opacity:0;pointer-events:none}
-.is-intro .b-bezel,.is-intro .x-title,.is-intro .x-in{opacity:0;pointer-events:none}
-.b-bezel,.x-title{transition:opacity var(--dur-ui) var(--ease-out)}
-@media (min-width:900px){.x-intro{padding:var(--s32) var(--s32) var(--s28)}}
-/* ---- الشاشة الأولى: التصميم 1 «بطاقة وتقويم يتلوّن» (اعتمده نادر 1 نوفمبر) ---- */
-.vis{position:relative;height:150px;border-radius:10px;overflow:hidden;background:linear-gradient(#020c22,#061a42);border:1px solid var(--edge);box-shadow:inset 0 0 40px rgba(0,0,0,.6)}
-.vis svg{position:absolute;inset:0;width:100%;height:100%}
-@media(max-height:720px){.vis{height:128px}}
-@media(min-width:900px){.vx{grid-template-columns:300px 1fr;gap:32px;align-items:center}.vis{height:300px}}
-@media(prefers-reduced-motion:reduce){.vis *{animation:none!important;transition:none!important}}
-:root{--pres:#BDC9E9;--fut:#FFA168}
+  -webkit-backdrop-filter:blur(26px) saturate(150%);backdrop-filter:blur(26px) saturate(150%);border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 20px 50px rgba(2,10,30,.45)}
+.x-panels{display:grid;min-width:0}
+.x-p{grid-area:1/1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;text-align:start;visibility:hidden;opacity:0;transition:opacity var(--dur-ui) var(--ease-out)}
+.x-p.on{visibility:visible;opacity:1}
+@media (min-width:900px){
+  .x-card{grid-template-columns:minmax(0,1fr) 300px;gap:44px;align-items:center;padding:var(--s32) 36px}
+  .x-vis{order:2}
+}
 
-.v1 .grid{position:absolute;inset:14px;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.v1 .day{display:grid;grid-template-rows:repeat(6,1fr);gap:4px}
-.v1 .b{border-radius:3px;background:rgba(189,201,233,.08);border:1px solid rgba(189,201,233,.14)}
-.v1 .b.p{background:var(--pres);opacity:0;animation:fillp .45s ease-out both;animation-delay:var(--d)}
-.v1 .b.f{background:repeating-linear-gradient(-45deg,var(--fut) 0 4px,rgba(255,161,104,.55) 4px 8px);border-color:var(--fut)}
-@keyframes fillp{from{opacity:0;transform:scaleY(.2)}to{opacity:.85;transform:none}}
+/* النص */
+.x-h{margin:0 0 var(--s10);font-size:var(--fs-title);font-weight:var(--fw-bold);line-height:var(--lh-title);text-wrap:balance}
+.x-h:focus{outline:none}
+.x-p[data-s="0"] .x-h{font-size:var(--fs-display);line-height:var(--lh-display)}
+.x-lead{margin:0;font-size:var(--fs-body);font-weight:var(--fw-medium);line-height:1.75;color:var(--ink);text-wrap:pretty;max-width:60ch}
+.x-p[data-s="0"] .x-lead{font-size:19px;line-height:1.7}
+.x-body{margin:var(--s10) 0 0;font-size:var(--fs-body);line-height:var(--lh-body);color:var(--ink2);text-wrap:pretty;max-width:60ch}
+.x-note{display:flex;gap:var(--s10);align-items:flex-start;margin:var(--s16) 0 0;padding:var(--s12) var(--s14);border-radius:14px;background:rgba(189,201,233,.08);border:1px solid var(--edge);
+  font-size:var(--fs-small);line-height:var(--lh-small);color:var(--ink)}
+.x-note svg{flex:none;margin-top:5px;color:var(--accent)}
+.x-note b{font-weight:var(--fw-bold)}
+.x-k{display:flex;align-items:center;gap:var(--s8);margin:0 0 var(--s6);font-size:var(--fs-small);font-weight:var(--fw-medium);line-height:1.5}
+.x-k i{width:10px;height:10px;border-radius:3px;background:currentColor;flex:none}
+.x-k[data-k="1"]{color:var(--hz1)}.x-k[data-k="2"]{color:var(--hz2)}.x-k[data-k="3"]{color:var(--hz3)}
+.x-exk{margin:var(--s14) 0 var(--s4);font-size:var(--fs-small);line-height:1.5;color:var(--ink2)}
+.x-ex{margin:0;padding:0;list-style:none;display:grid;gap:var(--s4);font-size:var(--fs-small);line-height:1.7;color:var(--ink2)}
+.x-ex li{display:flex;gap:var(--s10);align-items:baseline}
+.x-ex li::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.6;flex:none;transform:translateY(-3px)}
+.x-legend{margin:var(--s14) 0 0;padding:0;list-style:none;display:grid;gap:var(--s10)}
+.x-legend li{display:flex;align-items:center;gap:var(--s10);font-weight:var(--fw-medium);line-height:1.5}
+.x-legend i{width:14px;height:14px;border-radius:4px;flex:none}
+.x-legend i[data-k="1"]{background:var(--hz1)}.x-legend i[data-k="2"]{background:var(--hz2)}.x-legend i[data-k="3"]{background:var(--hz3)}
 
-#xintro.has-vis{display:grid;gap:16px;width:min(820px,calc(100vw - 32px))}
-@media(min-width:900px){#xintro.has-vis{grid-template-columns:300px 1fr;gap:32px;align-items:center}}
-@media(max-width:899px){#xintro.has-vis .vis{height:120px}}
-@media(max-height:720px){#xintro.has-vis .vis{height:96px}#xintro p{font-size:15px;line-height:1.65}}
+/* التقويم: الخطوة 0 = الحاضر بلون واحد والمستقبل مخطط؛ الخطوة 1 = الآفاق الثلاثة؛ الخطوات 2..4 = أفق واحد مضيء */
+.x-days{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:0 14px 6px;color:var(--ink2);font-size:12px;line-height:1.4;text-align:center}
+.x-cal{display:grid;grid-template-columns:repeat(5,1fr);gap:6px 8px;padding:14px;border-radius:16px;background:rgba(2,14,40,.75);border:1px solid var(--edge)}
+.x-cal i{height:10px;border-radius:4px;background:var(--hz-dim);transition:background var(--dur-ui) var(--ease-out)}
+@media (min-width:900px){.x-cal{gap:9px 8px;padding:16px}.x-cal i{height:14px}}
+.x-card[data-step="0"] .x-cal i[data-k="1"],.x-card[data-step="0"] .x-cal i[data-k="2"]{background:var(--hz1)}
+.x-card[data-step="0"] .x-cal i[data-k="3"]{background:repeating-linear-gradient(135deg,var(--hz2) 0 4px,rgba(255,161,104,.5) 4px 8px)}
+.x-card[data-step="1"] .x-cal i[data-k="1"],.x-card[data-step="2"] .x-cal i[data-k="1"]{background:var(--hz1)}
+.x-card[data-step="1"] .x-cal i[data-k="2"],.x-card[data-step="3"] .x-cal i[data-k="2"]{background:var(--hz2)}
+.x-card[data-step="1"] .x-cal i[data-k="3"],.x-card[data-step="4"] .x-cal i[data-k="3"]{background:var(--hz3)}
 
-/* ---- داخل الحلقة: المثال للخطوة الحالية ---- */
-.x-in{position:fixed;z-index:var(--z-stage);left:var(--cx);top:var(--cy);translate:-50% -50%;width:calc(var(--d) * .7);text-align:center;display:flex;flex-direction:column;align-items:center}
-.x-k{display:inline-flex;align-items:center;gap:var(--s8);font-size:var(--fs-small);font-weight:var(--fw-medium);line-height:1.5;color:var(--ink2)}
-.x-sw{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;font-size:12px;font-weight:var(--fw-bold);line-height:1;flex:none}
-.x-sw[data-h="1"]{background:var(--h1);color:var(--h1-on)}
-.x-sw[data-h="2"]{background:var(--h2);color:var(--h2-on)}
-.x-sw[data-h="3"]{background:var(--h3);color:var(--h3-on);box-shadow:inset 0 0 0 1px rgba(247,248,252,.5)}
-.x-name{margin-top:var(--s6);font-size:21px;font-weight:var(--fw-bold);line-height:1.35;text-wrap:balance}
-.x-rule{margin-top:var(--s4);font-size:var(--fs-small);font-weight:var(--fw-medium);line-height:1.5;color:var(--ink2);text-wrap:balance}
-.x-ex{margin-top:var(--s2);font-size:var(--fs-small);line-height:1.6;color:var(--ink);text-wrap:balance}
-.x-exk{margin-top:var(--s12);font-size:12px;line-height:1.5;color:var(--accent);font-weight:var(--fw-medium)}   /* بلا مربع (طلب نادر) */
-/* الختام داخل الحلقة: المستقبل أعلى (عند الشمال)، والحاضر أسفل */
-.x-legend{display:flex;align-items:center;gap:var(--s8)}.x-legend .x-sw{width:30px;height:30px;font-size:14px}.x-bar{width:0;height:26px;border-inline-start:1.5px dashed var(--edge-field);margin:0 var(--s6)}
-.x-key{display:flex;flex-direction:column;align-items:center;gap:var(--s14)}
-.x-key p{display:flex;flex-direction:column;align-items:center;gap:var(--s4);margin:0;font-size:20px;font-weight:var(--fw-bold);line-height:1.3}
-.x-key svg{width:32px;height:32px;color:var(--ink2)}
-.x-key hr{width:56px;height:0;margin:0;border:0;border-top:1px solid var(--edge-field)}
-
-/* ---- الإجراءات تحت الحلقة ---- */
+/* الإجراءات أسفل الشاشة */
 .x-foot{position:fixed;z-index:var(--z-stage);left:0;right:0;bottom:0;padding:0 calc(var(--sa-r) + var(--s20)) calc(var(--sa-b) + var(--s20)) calc(var(--sa-l) + var(--s20));display:flex;flex-direction:column;align-items:center;gap:var(--s14)}
 .x-foot::before{content:"";position:absolute;inset:-40px 0 0;z-index:-1;background:linear-gradient(to bottom,rgba(5,29,73,0),rgba(5,29,73,.75) 55%);pointer-events:none}
 .x-dots{display:flex;gap:var(--s6)}
@@ -713,22 +693,13 @@ a bdi{overflow-wrap:anywhere}
 .x-prev[hidden]{display:flex!important;visibility:hidden}
 .x-soon{position:relative;z-index:var(--z-stage);min-height:100dvh;display:flex;align-items:flex-end;justify-content:center;padding:96px var(--gut) calc(var(--sa-b) + var(--gut))}
 .x-soon .b-card{max-width:var(--card-max)}
-
 @media (min-width:900px){
-  .x-in{width:calc(var(--d) * .66)}
-  .x-k{font-size:var(--fs-label)}
-  .x-name{font-size:30px;line-height:1.3;margin-top:var(--s10)}
-  .x-rule{font-size:18px;margin-top:var(--s6)}
-  .x-ex{font-size:19px;line-height:1.65}
-  .x-exk{font-size:14px;margin-top:var(--s16)}
-  .x-title{top:var(--s32);line-height:44px;font-size:24px}
-  .x-lbl{font-size:26px}.x-lbl svg{width:32px;height:32px}.x-lbl i{width:34px}
-  .x-key{gap:var(--s20)}.x-key p{font-size:26px}.x-key svg{width:40px;height:40px}.x-key hr{width:80px}
+  #ringUI{padding-top:calc(var(--sa-t) + 136px);padding-bottom:150px}
   .x-foot{padding-bottom:var(--s40)}
   .x-soon{align-items:center}
 }
-@media (prefers-reduced-motion:reduce){ .x-rot{transition:opacity 180ms linear} .x-dim{transition:opacity 180ms linear} }
-.x-still .x-rot,.x-still .x-num,.x-still .x-sep,.x-still .x-br,.x-still .x-dim{transition:none}
+@media (prefers-reduced-motion:reduce){.x-p,.x-cal i{transition:none}}
+
 
 </style>
 <style data-view="activity" media="not all">
@@ -934,6 +905,33 @@ a bdi{overflow-wrap:anywhere}
 /* مساحة سطر الحفظ التلقائي فوق التذييل، حتى لا يغطي آخر خيار */
 #app{padding-bottom:calc(var(--sa-b) + var(--foot) + var(--s8) + 24px)}
 @media (min-width:900px){#app{padding-bottom:calc(var(--foot) + var(--s16) + 24px)}}
+/* الأسبوع الأول (اعتمده نادر 4 نوفمبر): ملاحظة تحت السؤال الأول، ولون المسار في خياراته، والقراءة الإضافية، وصفحة «جرّب هذا الأسبوع» */
+.q-hint{margin-top:var(--s8);max-width:52ch;font-size:var(--fs-small);line-height:var(--lh-small);color:var(--ink2);text-wrap:pretty;text-shadow:var(--text-shadow-lg)}
+.q-opt .t b{font-weight:var(--fw-bold)}
+.q-hz{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:var(--s8);vertical-align:1px}
+.q-hz[data-k="1"]{background:#BDC9E9}.q-hz[data-k="2"]{background:#FFA168}.q-hz[data-k="3"]{background:#D9A9E6}
+.w-read p{margin-top:var(--s6);color:var(--ink);text-wrap:pretty}
+.w-try-h{display:flex;align-items:center;gap:var(--s10)}
+.w-try-h svg{width:26px;height:26px;color:var(--accent);flex:none}
+.w-tryp .b-lead{margin-top:var(--s10)}
+.w-tryp .b-body{margin-top:var(--s10)}
+.w-steps{margin:var(--s10) 0 0;padding:0;list-style:none;counter-reset:st;display:grid;gap:var(--s8)}
+.w-steps li{counter-increment:st;display:flex;gap:var(--s10);align-items:flex-start;padding:var(--s10) var(--s14);border-radius:14px;background:rgba(189,201,233,.08);border:1px solid var(--edge);line-height:1.6}
+.w-steps li::before{content:counter(st);flex:none;display:inline-grid;place-items:center;width:24px;height:24px;margin-top:1px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font-size:13px;font-weight:var(--fw-bold)}
+.w-close{margin-top:var(--s14);font-size:var(--fs-small);line-height:var(--lh-small);color:var(--ink2);text-wrap:pretty}
+/* «جرّب هذا الأسبوع»: التصميم 2 «خانة في الأسبوع القادم» (اعتمده نادر 4 نوفمبر) */
+.w-wk{margin-top:var(--s14);display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.w-wk div{display:grid;gap:5px;text-align:center}
+.w-wk span{font-size:12px;line-height:1.4;color:var(--ink2)}
+.w-wk i{height:12px;border-radius:4px;background:rgba(189,201,233,.14)}
+.w-wk i.me{background:var(--accent);box-shadow:0 0 0 3px rgba(255,161,104,.25)}
+.w-wk-cap{margin-top:var(--s8);text-align:center;font-size:13px;line-height:1.5;color:var(--accent);font-weight:var(--fw-medium)}
+.w-qs{margin:var(--s8) 0 0;padding:0;list-style:none;display:grid;gap:var(--s6)}
+.w-qs li{display:flex;gap:var(--s10);align-items:baseline;line-height:1.6;font-weight:var(--fw-medium)}
+.w-qs li::before{content:"؟";color:var(--accent);font-weight:var(--fw-bold);flex:none}
+/* مسافة لخريطة الرحلة أعلى الأسبوع الأول، حتى لا تغطيها البطاقة */
+#v[data-wk="1"] #app{padding-top:calc(var(--sa-t) + 108px)}
+@media (min-width:900px){#v[data-wk="1"] #app{padding-top:148px}}
 
 </style>
 <style data-view="admin" media="not all">
@@ -1539,30 +1537,30 @@ window.BOSLA_COPY = {
   team: 'فريق الابتكار في علم',
   contactName: 'نادر العتيبي',
   contactEmail: 'nadealotaibi@elm.sa',
-  program: 'القيادة إلى ما بعد الأعمال الأساسية',
+  program: 'برنامج التميز في الابتكار القيادي',
 
   /* التعريف */
   'intro.hello': 'أهلًا {name}،',
-  'intro.lead': { m: 'قبل انطلاق برنامج القيادة إلى ما بعد الأعمال الأساسية، ندعوك إلى تخصيص بضع دقائق للتأمل، والنظر في كيفية توزيع وقتك بين أولويات العمل اليوم والاستعداد للمستقبل.',
-                  f: 'قبل انطلاق برنامج القيادة إلى ما بعد الأعمال الأساسية، ندعوكِ إلى تخصيص بضع دقائق للتأمل، والنظر في كيفية توزيع وقتكِ بين أولويات العمل اليوم والاستعداد للمستقبل.' },
+  'intro.lead': { m: 'قبل انطلاق برنامج التميز في الابتكار القيادي، ندعوك إلى تخصيص بضع دقائق للتأمل، والنظر في كيفية توزيع وقتك بين أولويات العمل اليوم والاستعداد للمستقبل.',
+                  f: 'قبل انطلاق برنامج التميز في الابتكار القيادي، ندعوك إلى تخصيص بضع دقائق للتأمل، والنظر في كيفية توزيع وقتك بين أولويات العمل اليوم والاستعداد للمستقبل.' },
   'intro.week': { m: 'ستجد هنا أنشطة قصيرة أسبوعية تساعدك على مراجعة بعض جوانب عملك وتجربة أفكار جديدة فيه.',
-                  f: 'ستجدين هنا أنشطة قصيرة أسبوعية تساعدكِ على مراجعة بعض جوانب عملكِ وتجربة أفكار جديدة فيه.' },
-  'intro.time': 'الوقت: حوالي 5 دقائق في الأسبوع.',
+                  f: 'ستجدين هنا أنشطة قصيرة أسبوعية تساعدك على مراجعة بعض جوانب عملك وتجربة أفكار جديدة فيه.' },
+  'intro.time': 'الوقت: حوالي 3 دقائق.',
   'intro.first': 'الأسبوع الأول: «أين يذهب أسبوعك؟»، يفتح الأحد 8 نوفمبر.',
-  'intro.from': { m: 'لأي استفسار يمكنك التواصل مع نادر العتيبي من إدارة الابتكار', f: 'لأي استفسار يمكنكِ التواصل مع نادر العتيبي من إدارة الابتكار' },
+  'intro.from': { m: 'لأي استفسار يمكنك التواصل مع نادر العتيبي من إدارة الابتكار', f: 'لأي استفسار يمكنك التواصل مع نادر العتيبي من إدارة الابتكار' },
   /* بعد إنهاء الأسبوع: نفس شاشة الترحيب، وسطر الأسبوع التالي (قرار نادر 1 نوفمبر). المواعيد: كل أحد */
-  'next.done1': { m: 'أنهيت الأسبوع الأول.', f: 'أنهيتِ الأسبوع الأول.' },
+  'next.done1': { m: 'أنهيت الأسبوع الأول.', f: 'أنهيت الأسبوع الأول.' },
   'next.w2': 'الأسبوع الثاني: «أفكار على الرف»، يفتح الأحد 15 نوفمبر.',
   'next.w3': 'الأسبوع الثالث: «بعيون المستفيد»، يفتح الأحد 22 نوفمبر.',
   'next.w4': 'الأسبوع الأخير: «فشل البرنامج التدريبي»، يفتح الأحد 29 نوفمبر.',
-  'intro.cta': { m: 'ابدأ', f: 'ابدئي' },
+  'intro.cta': 'ابدأ',
   'facts.stops': 'أربع وقفات',
-  'facts.time': '5 دقائق في الأسبوع',
+  'facts.time': '3 دقائق',
   'facts.opens': 'يفتح الأحد 8 نوفمبر',
 
   /* اختيار كلمة المرور */
-  'setpw.title': { m: 'اختر كلمة مرور لبوصلتك', f: 'اختاري كلمة مرور لبوصلتكِ' },
-  'setpw.sub': { m: 'ستحتاجها إن دخلت من جهاز آخر.', f: 'ستحتاجينها إن دخلتِ من جهاز آخر.' },
+  'setpw.title': { m: 'اختر كلمة مرور لبوصلتك', f: 'اختاري كلمة مرور لبوصلتك' },
+  'setpw.sub': { m: 'ستحتاجها إن دخلت من جهاز آخر.', f: 'ستحتاجينها إن دخلت من جهاز آخر.' },
   'field.pw': 'كلمة المرور',
   'field.pw.hint': '8 أحرف أو أكثر',
   'field.confirm': { m: 'أعد كتابتها للتأكيد', f: 'أعيدي كتابتها للتأكيد' },
@@ -1570,23 +1568,23 @@ window.BOSLA_COPY = {
   'field.show': 'إظهار كلمة المرور',
   'field.hide': 'إخفاء كلمة المرور',
   'remember': 'تذكّر هذا الجهاز',
-  'setpw.cta': { m: 'احفظ وادخل', f: 'احفظي وادخلي' },
+  'setpw.cta': 'احفظ وادخل',
   'err.short': 'كلمة المرور أقصر من 8 أحرف.',
   'err.mismatch': 'الكلمتان غير متطابقتين.',
   'err.empty': { m: 'اكتب كلمة المرور أولًا.', f: 'اكتبي كلمة المرور أولًا.' },
-  'err.emailEmpty': { m: 'اكتب بريدك الإلكتروني أولًا.', f: 'اكتبي بريدكِ الإلكتروني أولًا.' },
+  'err.emailEmpty': { m: 'اكتب بريدك الإلكتروني أولًا.', f: 'اكتبي بريدك الإلكتروني أولًا.' },
 
   /* الرئيسية */
   'home.hello': 'أهلًا {name}',
   'home.week1': 'الأسبوع الأول · أين يذهب أسبوعك؟',
   'home.locked': 'يفتح الأحد 8 نوفمبر',
-  'home.lockedNote': { m: 'سنرسل لك تذكيرًا صباح الأحد.', f: 'سنرسل لكِ تذكيرًا صباح الأحد.' },
+  'home.lockedNote': { m: 'سنرسل لك تذكيرًا صباح الأحد.', f: 'سنرسل لك تذكيرًا صباح الأحد.' },
   'home.open': 'مفتوح الآن',
   'home.about': 'عن البوصلة',
 
   /* العودة */
   'login.hello': { m: 'أهلًا {name}، اكتب كلمة المرور', f: 'أهلًا {name}، اكتبي كلمة المرور' },
-  'login.cta': { m: 'ادخل', f: 'ادخلي' },
+  'login.cta': 'ادخل',
   'login.forgot': 'نسيتها؟',
   'login.generic.title': 'الدخول إلى بوصلة القائد',
   'login.sendLink': 'أرسل لي رابطي',
@@ -1597,11 +1595,11 @@ window.BOSLA_COPY = {
   'left.2': 'بقيت لك محاولتان.',
   'left.1': 'بقيت لك محاولة واحدة.',
   'err.locked': { m: 'أوقفنا الدخول ربع ساعة حمايةً لحسابك. جرّب بعد {time}، أو اختر كلمة مرور جديدة.',
-                  f: 'أوقفنا الدخول ربع ساعة حمايةً لحسابكِ. جرّبي بعد {time}، أو اختاري كلمة مرور جديدة.' },
+                  f: 'أوقفنا الدخول ربع ساعة حمايةً لحسابك. جرّبي بعد {time}، أو اختاري كلمة مرور جديدة.' },
   'time.min.n': '{n} دقائق', 'time.min.11': '{n} دقيقة', 'time.min.2': 'دقيقتين', 'time.min.1': 'دقيقة', 'time.min.0': 'أقل من دقيقة',
-  'msg.linkSent': { m: 'أرسلنا رابطك إلى بريدك. افتحه من جوالك أو حاسوبك.', f: 'أرسلنا رابطكِ إلى بريدكِ. افتحيه من جوالكِ أو حاسوبكِ.' },
+  'msg.linkSent': { m: 'أرسلنا رابطك إلى بريدك. افتحه من جوالك أو حاسوبك.', f: 'أرسلنا رابطك إلى بريدك. افتحيه من جوالك أو حاسوبك.' },
   'msg.resetSent': { m: 'أرسلنا إلى بريدك رابطًا تختار منه كلمة مرور جديدة. يعمل الرابط ساعة واحدة.',
-                     f: 'أرسلنا إلى بريدكِ رابطًا تختارين منه كلمة مرور جديدة. يعمل الرابط ساعة واحدة.' },
+                     f: 'أرسلنا إلى بريدك رابطًا تختارين منه كلمة مرور جديدة. يعمل الرابط ساعة واحدة.' },
   'reset.title': { m: 'اختر كلمة مرور جديدة', f: 'اختاري كلمة مرور جديدة' },
   'reset.expired': 'انتهت مدة هذا الرابط. نرسل لك رابطًا جديدًا؟',
   'reset.newLink': 'أرسل لي رابطًا جديدًا',
@@ -1620,24 +1618,24 @@ window.BOSLA_COPY = {
  */
 Object.assign(window.BOSLA_COPY, {
   /* من backend/BASE-CHANGES.md */
-  'err.server': { m: 'لم يصلنا طلبك. جرّب مرة أخرى بعد قليل.', f: 'لم يصلنا طلبكِ. جرّبي مرة أخرى بعد قليل.' },
-  'err.auth': { m: 'انتهت جلستك. اكتب كلمة المرور لتكمل.', f: 'انتهت جلستكِ. اكتبي كلمة المرور لتكملي.' },
+  'err.server': { m: 'لم يصلنا طلبك. جرّب مرة أخرى بعد قليل.', f: 'لم يصلنا طلبك. جرّبي مرة أخرى بعد قليل.' },
+  'err.auth': { m: 'انتهت جلستك. اكتب كلمة المرور لتكمل.', f: 'انتهت جلستك. اكتبي كلمة المرور لتكملي.' },
   'err.adminAuth': 'انتهت جلسة لوحة الأدمن. ادخل من جديد.',
 
   /* الرئيسية بعد فتح الأسبوع وحتى قفله. {end} = آخر يوم في الأسبوع («14 نوفمبر»)، يملؤه الموقع */
-  'home.start': { m: 'ابدأ', f: 'ابدئي' },
-  'home.continue': { m: 'أكمل', f: 'أكملي' },
+  'home.start': 'ابدأ',
+  'home.continue': 'أكمل',
   'home.openNote': 'مفتوح حتى نهاية السبت {end}.',
-  'home.inProgress': { m: 'حفظنا ما اخترته، فأكمل من حيث توقفت.', f: 'حفظنا ما اخترتِه، فأكملي من حيث توقفتِ.' },
-  'home.review': { m: 'راجع إجاباتك', f: 'راجعي إجاباتكِ' },
+  'home.inProgress': { m: 'حفظنا ما اخترته، فأكمل من حيث توقفت.', f: 'حفظنا ما اخترته، فأكملي من حيث توقفت.' },
+  'home.review': 'راجع إجاباتك',
 
   /* الأسابيع 2 إلى 4 (نص جديد بانتظار اعتماد نادر 1 نوفمبر): بنفس صيغة نصوص الأسبوع الأول المعتمدة */
   'home.week2': 'الأسبوع الثاني · أفكار على الرف',
   'home.week3': 'الأسبوع الثالث · بعيون المستفيد',
   'home.week4': 'الأسبوع الأخير · فشل البرنامج التدريبي',
-  'next.done2': { m: 'أنهيت الأسبوع الثاني.', f: 'أنهيتِ الأسبوع الثاني.' },
-  'next.done3': { m: 'أنهيت الأسبوع الثالث.', f: 'أنهيتِ الأسبوع الثالث.' },
-  'next.done4': { m: 'أنهيت الأسبوع الأخير.', f: 'أنهيتِ الأسبوع الأخير.' },
+  'next.done2': { m: 'أنهيت الأسبوع الثاني.', f: 'أنهيت الأسبوع الثاني.' },
+  'next.done3': { m: 'أنهيت الأسبوع الثالث.', f: 'أنهيت الأسبوع الثالث.' },
+  'next.done4': { m: 'أنهيت الأسبوع الأخير.', f: 'أنهيت الأسبوع الأخير.' },
   /* سطر الأسبوع في شاشة الترحيب حين يكون مفتوحًا (قبل الأحد 8 نوفمبر يبقى intro.first) */
   'open.w1': 'الأسبوع الأول: «أين يذهب أسبوعك؟»، مفتوح حتى نهاية السبت 14 نوفمبر.',
   'open.w2': 'الأسبوع الثاني: «أفكار على الرف»، مفتوح حتى نهاية السبت 21 نوفمبر.',
@@ -1656,9 +1654,9 @@ Object.assign(window.BOSLA_COPY, {
 
   /* Supabase: لا بريد من الخادم. «أرسل لي رابطي» و«نسيتها؟» يصلان نادر، وهو يرسل الرابط من بريده (يحل محل نص shared/copy.js) */
   'msg.linkSent': { m: 'وصل طلبك إلى نادر العتيبي، وسيرسل رابطك إلى بريدك قريبًا. لأي استفسار:',
-                    f: 'وصل طلبكِ إلى نادر العتيبي، وسيرسل رابطكِ إلى بريدكِ قريبًا. لأي استفسار:' },
+                    f: 'وصل طلبك إلى نادر العتيبي، وسيرسل رابطك إلى بريدك قريبًا. لأي استفسار:' },
   'msg.resetSent': { m: 'وصل طلبك إلى نادر العتيبي، وسيرسل إلى بريدك قريبًا رابطًا تختار منه كلمة مرور جديدة. لأي استفسار:',
-                     f: 'وصل طلبكِ إلى نادر العتيبي، وسيرسل إلى بريدكِ قريبًا رابطًا تختارين منه كلمة مرور جديدة. لأي استفسار:' },
+                     f: 'وصل طلبك إلى نادر العتيبي، وسيرسل إلى بريدك قريبًا رابطًا تختارين منه كلمة مرور جديدة. لأي استفسار:' },
   'err.shortAdmin': 'كلمة مرور الأدمن أقصر من 12 حرفًا.',
   'field.pw.hintAdmin': '12 حرفًا أو أكثر',
 
@@ -1669,7 +1667,7 @@ Object.assign(window.BOSLA_COPY, {
 
 </script>
 <script>
-window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"المبيعات المباشرة","ring":["تجديد عقود عملائنا الحاليين بخطوات أقل","منتجاتنا الحكومية نفسها لجهة حكومية خليجية","بيع منتجاتنا باشتراك شهري بدل العقد"]},{"k":"risk-bc","ar":"المخاطر واستمرارية الأعمال","ring":["خطة طوارئ أسرع تحمي خدمات علم","خبرتنا في خطط الطوارئ لعملاء خارج علم","تقرير شهري عن المخاطر تشترك فيه الشركات"]},{"k":"privacy","ar":"الخصوصية وحوكمة البيانات","ring":["رد أسرع على طلبات الخصوصية داخل علم","خبرتنا في حماية البيانات لعملائنا","بيع بيانات لا تكشف هوية أصحابها"]},{"k":"international","ar":"الأعمال الدولية","ring":["تسليم أسرع لعملائنا الحاليين في الخارج","حلول الحج لدولة يأتي منها الحجاج","تأجير منصاتنا لدول أخرى بدل بيعها"]},{"k":"talent","ar":"إدارة المواهب والأكاديمية","ring":["برنامج تدريب أقصر وأوضح لموظفي علم","برامج أكاديمية علم لعملاء من خارجها","منصة تعلّم يدفع لها الناس اشتراكًا"]},{"k":"corp-it","ar":"عمليات التقنية المؤسسية","ring":["حل أعطال أجهزة الموظفين في وقت أقل","خدمة الدعم الفني لشركة تابعة","بيع خدمات تقنية المكاتب باشتراك شهري"]},{"k":"sales-support","ar":"دعم المبيعات","ring":["عروض أسعار أسرع لفريق البيع","تدريب الشركاء على بيع حلولنا","قناة يشتري منها العميل بنفسه دون مندوب"]},{"k":"hu-tech","ar":"تقنية الحج والعمرة","ring":["تصريح أسرع للحاج، بخطوات أقل","نظام التصاريح نفسه لمنظّمي الفعاليات الكبرى","بيع بيانات حركة الزوار لقطاع السياحة"]},{"k":"specs","ar":"المواصفات والمعايير","ring":["اعتماد المواصفات في وقت أقل","معاييرنا اللوجستية لميناء خليجي","شهادة مطابقة تدفع الشركات مقابلها"]},{"k":"bd-presales","ar":"تطوير الأعمال وما قبل البيع","ring":["عروض فنية أسرع لعملائنا الحاليين","تشغيل خدمات مستشفى نيابة عنه","أجر يُدفع حسب النتائج لا بالساعات"]},{"k":"process-out","ar":"إسناد العمليات","ring":["مركز اتصال يحل طلب العميل من أول مكالمة","خدمة مركز الاتصال نفسها لبنك","موظف رقمي ينجز المهام المتكررة للعملاء"]},{"k":"agility","ar":"الرشاقة والتميز المؤسسي","ring":["إجراءات أقصر داخل علم","تجهيز جهات حكومية لجوائز التميز","أداة تقيس نضج الجهات تُباع باشتراك"]},{"k":"strategy","ar":"الاستراتيجية والتخطيط","ring":["خطة سنوية أوضح ومتابعة أسهل","قدرات علم الحالية لقطاع الصحة","صندوق يستثمر في شركات ناشئة"]},{"k":"energy","ar":"الطاقة والموارد الطبيعية","ring":["تسليم أسرع لعملاء الطاقة الحاليين","حلولنا لشركة تعدين","سوق لبيع وشراء شهادات الكربون"]},{"k":"hu-products","ar":"منتجات الحج والعمرة","ring":["تطبيق أسهل للمعتمر بخطوات أقل","منتجاتنا لشركات السياحة","سوق يجمع خدمات الزوار في مكان واحد"]},{"k":"delivery-ex","ar":"تمكين التسليم والتميز","ring":["مشاريع تُسلَّم في وقتها بمراجعات أقل","طريقتنا في تسليم المشاريع لعملائنا","أجر يُدفع عند تحقق نتيجة المشروع"]},{"k":"mobility","ar":"التنقل","ring":["خدمة أسرع لأصحاب المركبات","منصتنا لشركات تأجير السيارات","تأمين سيارات يُدفع حسب الاستخدام"]},{"k":"logistics-air","ar":"الخدمات اللوجستية والجوية","ring":["إجراءات شحن أسرع لعملائنا الحاليين","منصتنا لمطار إقليمي","سوق تؤجر فيه الشركات مساحات الشحن الفارغة"]},{"k":"fin-report","ar":"التقارير والرقابة المالية","ring":["إقفال الحسابات الشهرية في أيام أقل","خدمة إقفال الحسابات لشركة تابعة","إدارة مالية كاملة نقدمها لشركات أخرى"]},{"k":"public-security","ar":"خدمات الأمن العام","ring":["خدمة أسرع للجهات الأمنية التي نخدمها","خدماتنا لشركات الحراسة","خدمة التحقق من الهوية تدفع الشركات مقابلها"]},{"k":"facilities","ar":"المرافق والخدمات الإدارية","ring":["طلبات صيانة تُنجز في وقت أقل","إدارة مرافق مبنى لعميل خارجي","تأجير مساحات العمل الفارغة"]},{"k":"shared-tech","ar":"الخدمات التقنية المشتركة","ring":["أنظمة تتوقف أقل للخدمات الحالية","بنيتنا التقنية لجهة جديدة","تأجير منصتنا لشركات أخرى"]},{"k":"tech-delivery","ar":"إدارة التسليم التقني","ring":["إصدارات أسرع للأنظمة العدلية الحالية","منصتنا العدلية لمكاتب المحاماة","خدمة تقدّر سعر العقار آليًا"]},{"k":"ceo-office","ar":"مكتب الرئيس التنفيذي","ring":["متابعة أسرع لقرارات الرئيس","قدرات علم لدولة شقيقة","الاستثمار في أفكار جديدة خارج علم"]}]},W1:{"q1":{"label":"","question":"عندما تنظر إلى أسبوعك الماضي، أين ذهب معظم وقتك؟","options":{"أ":"متابعة العمل اليومي وحل المشكلات التي تظهر.","ب":"الاجتماعات والتنسيق مع الفرق والإدارات.","ج":"مراجعة الخطط والقرارات ومتابعة تنفيذها.","د":"التفكير في فرص جديدة والعمل على تطويرها."}},"q2":{"label":"","question":"عندما تنظر إلى أولويات قطاعك، أي نوع من العمل يأخذ النصيب الأكبر من وقتك واهتمامك؟","options":{"أ":"تشغيل الخدمات والأعمال القائمة، ومعالجة ما يظهر فيها من تحديات.","ب":"تحسين الخدمات الحالية وتطويرها لتلبية احتياجات جديدة.","ج":"استكشاف فرص جديدة قد تفتح للقطاع مجالات عمل مختلفة في المستقبل.","د":"تتوزع الأولويات بين هذه المجالات، لكن العمل اليومي يظل له النصيب الأكبر."}},"diagnoses":{"أ":{"title":"ذهب معظم أسبوعك إلى التشغيل","description":"يمضي معظم وقتك في متابعة العمل القائم ومعالجة ما يظهر فيه من مشكلات. ومع تكرار المشكلات، تعود إليك في كل مرة بدلًا من أن يتفرغ أحد لمعرفة أسبابها وحلها من جذورها.","experiment":"كلّف أحد أفراد فريقك بمتابعة مشكلة متكررة حتى يعالج أسبابها، وخصص الوقت الذي كنت تقضيه فيها لدراسة فرصة جديدة."},"ب":{"title":"ذهب معظم أسبوعك إلى الاجتماعات","description":"يمتلئ أسبوعك بالاجتماعات والتنسيق. ومع ازدحام المواعيد، يتراجع الوقت المتاح للتفكير في المستقبل.","experiment":"راجع اجتماعاتك، وحدد اجتماعًا واحدًا يمكن اختصاره أو الاستغناء عنه، واستخدم وقته للتفكير في فرصة مستقبلية."},"ج":{"title":"ذهب معظم أسبوعك إلى المراجعة","description":"يذهب وقتك إلى مراجعة الخطط والقرارات. أما الفرص التي قد تنقل العمل إلى مجال جديد، فلا تجد وقتًا كافيًا للنظر فيها.","experiment":"خصص نصف ساعة لمناقشة فرصة واحدة خارج نطاق الخدمات الحالية مع فريقك."},"د":{"title":"ذهب معظم أسبوعك إلى الفرص الجديدة","description":"تخصص وقتًا للتفكير في الفرص الجديدة. لكن الأفكار تحتاج إلى متابعة حتى تتحول إلى خطوات عملية.","experiment":"اختر فرصة مستقبلية واحدة، وحدد خطوة عملية صغيرة للبدء فيها."}},"sector":{"أ":"تتجه أولويات قطاعك إلى تشغيل الخدمات والأعمال القائمة ومعالجة تحدياتها.","ب":"يركز قطاعك على تحسين ما يقدمه اليوم.","ج":"يتجه قطاعك إلى استكشاف فرص قد تفتح له مجالات عمل جديدة.","د":"تتوزع أولويات قطاعك بين أكثر من أفق، ويبقى للعمل اليومي النصيب الأكبر."},"labels":{"sectorK":"في قطاعك:","tryK":"جرّب هذا الأسبوع","next":"التالي","prev":"السابق","showResult":"عرض النتيجة"},"f":{"q1":{"question":"عندما تنظرين إلى أسبوعكِ الماضي، أين ذهب معظم وقتكِ؟"},"q2":{"question":"عندما تنظرين إلى أولويات قطاعكِ، أي نوع من العمل يأخذ النصيب الأكبر من وقتكِ واهتمامكِ؟"},"diagnoses":{"أ":{"experiment":"كلّفي أحد أفراد فريقكِ بمتابعة مشكلة متكررة حتى يعالج أسبابها، وخصصي الوقت الذي كنتِ تقضينه فيها لدراسة فرصة جديدة."},"ب":{"experiment":"راجعي اجتماعاتكِ، وحددي اجتماعًا واحدًا يمكن اختصاره أو الاستغناء عنه، واستخدمي وقته للتفكير في فرصة مستقبلية."},"ج":{"experiment":"خصصي نصف ساعة لمناقشة فرصة واحدة خارج نطاق الخدمات الحالية مع فريقكِ."},"د":{"description":"تخصصين وقتًا للتفكير في الفرص الجديدة. لكن الأفكار تحتاج إلى متابعة حتى تتحول إلى خطوات عملية.","experiment":"اختاري فرصة مستقبلية واحدة، وحددي خطوة عملية صغيرة للبدء فيها."}},"labels":{"tryK":"جرّبي هذا الأسبوع"}}},W1I:{"title":"أين يذهب أسبوعك؟","intro":{"p1":"يمتلئ أسبوع القائد عادةً بالاجتماعات والمتابعة والقرارات العاجلة. كلها مهمة، لكنها تخص الحاضر، وقد لا يبقى بعدها وقت لما سيأتي.","p2":"تندرج أعمالك ضمن ثلاثة آفاق للابتكار، ستتعرف عليها في الخطوات التالية. بعدها تجيب عن سؤالين: أين ذهب وقتك في الأسبوع الماضي، وما الذي يأخذ الأولوية في قطاعك."},"f":{"intro":{"p2":"تندرج أعمالكِ ضمن ثلاثة آفاق للابتكار، ستتعرفين عليها في الخطوات التالية. بعدها تجيبين عن سؤالين: أين ذهب وقتكِ في الأسبوع الماضي، وما الذي يأخذ الأولوية في قطاعكِ."}}},W2:{"title":"أفكار على الرف","intro":{"p1":"بعض الأفكار لا تُرفض، لكنها تبقى مؤجلة حتى ينشغل عنها أصحابها وينسونها. وأحيانًا تكون طريقة استقبالنا للفكرة، أو أول سؤال نطرحه عنها، سببًا في توقفها.","p2":"في هذا النشاط، ستراجع ما يحدث للأفكار الجديدة في فريقك، وكيف تستقبلها، ثم تتعرف على خطوة صغيرة يمكنك تجربتها هذا الأسبوع."},"q1":{"label":"ماذا يحدث للأفكار؟","question":"عندما يطرح أحد أفراد فريقك فكرة جديدة، ولا تكون نتائجها واضحة، ماذا يحدث عادة؟","options":{"أ":"نناقشها، لكن نؤجل النظر فيها حتى تتضح الصورة.","ب":"نطلب من صاحبها دراسة الفكرة أكثر قبل أن نقرر.","ج":"نبحث عن طريقة صغيرة لتجربتها قبل الحكم عليها.","د":"ننشغل بالأفكار التي نعرف أنها ستحقق نتيجة."}},"q2":{"label":"كيف تستقبل الفكرة؟","question":"حين يعرض عليك أحد أفراد فريقك فكرة جديدة، ما أول ما تسأله عادة؟","options":{"أ":"هل سبق أن جُرّبت؟ وما النتائج المتوقعة؟","ب":"ما أصغر خطوة يمكن أن نبدأ بها؟","ج":"من سيتولى العمل عليها؟ وكم ستحتاج من الوقت؟","د":"ما الذي تحتاجه مني لتبدأ؟"}},"diagnoses":{"أ":{"title":"الدليل قبل التجربة","description":"حين تُعرض عليك فكرة، تبحث أولًا عن دليل يثبت أنها تستحق المحاولة. وقد ينتقل هذا التوقع إلى الفريق، فيتردد أفراده في طرح أفكار لم تُختبر بعد.","experiment":"اختر فكرة لم تُجرّب من قبل، واسأل صاحبها كيف يمكن اختبارها على نطاق صغير قبل طلب دراسة إضافية."},"ب":{"title":"الفكرة تنتظر","description":"تبحث عن طريقة لتجربة الفكرة قبل الحكم عليها. لكن قد تبقى بعض الأفكار في مرحلة النقاش، حتى مع وجود استعداد لتجربتها.","experiment":"اختر فكرة نوقشت سابقًا، واتفق مع صاحبها على تجربة على نطاق صغير."},"ج":{"title":"الوقت والقدرة","description":"تنتقل سريعًا إلى السؤال عن الوقت والشخص الذي سيتولى الفكرة. وقد يتوقف النقاش عند هذه النقطة، خصوصًا حين تكون مسؤوليات الفريق ممتلئة.","experiment":"اختر فكرة مؤجلة، وابحث مع صاحبها عن طريقة لتجربتها، مع تخصيص وقت وموارد تناسب حجم التجربة."},"د":{"title":"الدعم يحتاج خطوة","description":"تترك لصاحب الفكرة مساحة ليشرح ما يحتاجه منك. لكن قد ينتهي الحديث دون اتفاق واضح على الخطوة التالية، فتعود الفكرة إلى مكانها مجرد فكرة.","experiment":"اسأل أحد أفراد فريقك عن فكرة متوقفة، واتفق معه على خطوات يمكنك مساعدته في البدء بها."}},"observations":{"أ":{"title":"الأفكار المؤجلة","description":"بعض الأفكار تبقى معلّقة حتى تتضح الصورة، ثم تنشغلون عنها بأمور أخرى."},"ب":{"title":"الحاجة إلى مزيد من الدراسة","description":"قد تحتاج الفكرة إلى أكثر من جولة من الدراسة قبل أن تجد فرصة للمحاولة."},"ج":{"title":"فرصة للتجربة","description":"تجد الأفكار فرصة للمحاولة، حتى قبل أن تتضح نتائجها بالكامل."},"د":{"title":"الأولوية للمضمون","description":"تميل الأولوية إلى الأعمال التي تعرفون نتائجها، وتنتظر الأفكار الجديدة وقتًا مناسبًا."}},"labels":{"resultK":"قراءتك للنتيجة","teamK":"ما الذي يحدث للأفكار في فريقك؟","tryK":"جرّب هذا الأسبوع","showResult":"عرض نتيجتك","next":"التالي","prev":"السابق"},"f":{"intro":{"p2":"في هذا النشاط، ستراجعين ما يحدث للأفكار الجديدة في فريقك، وكيف تستقبلينها، ثم تتعرفين على خطوة صغيرة يمكنك تجربتها هذا الأسبوع."},"q2":{"label":"كيف تستقبلين الفكرة؟","question":"حين يعرض عليك أحد أفراد فريقك فكرة جديدة، ما أول ما تسألينه عادة؟"},"diagnoses":{"أ":{"description":"حين تُعرض عليك فكرة، تبحثين أولًا عن دليل يثبت أنها تستحق المحاولة. وقد ينتقل هذا التوقع إلى الفريق، فيتردد أفراده في طرح أفكار لم تُختبر بعد.","experiment":"اختاري فكرة لم تُجرّب من قبل، واسألي صاحبها كيف يمكن اختبارها على نطاق صغير قبل طلب دراسة إضافية."},"ب":{"description":"تبحثين عن طريقة لتجربة الفكرة قبل الحكم عليها. لكن قد تبقى بعض الأفكار في مرحلة النقاش، حتى مع وجود استعداد لتجربتها.","experiment":"اختاري فكرة نوقشت سابقًا، واتفقي مع صاحبها على تجربة على نطاق صغير."},"ج":{"description":"تنتقلين سريعًا إلى السؤال عن الوقت والشخص الذي سيتولى الفكرة. وقد يتوقف النقاش عند هذه النقطة، خصوصًا حين تكون مسؤوليات الفريق ممتلئة.","experiment":"اختاري فكرة مؤجلة، وابحثي مع صاحبها عن طريقة لتجربتها، مع تخصيص وقت وموارد تناسب حجم التجربة."},"د":{"description":"تتركين لصاحب الفكرة مساحة ليشرح ما يحتاجه منك. لكن قد ينتهي الحديث دون اتفاق واضح على الخطوة التالية، فتعود الفكرة إلى مكانها مجرد فكرة.","experiment":"اسألي أحد أفراد فريقك عن فكرة متوقفة، واتفقي معه على خطوات يمكنك مساعدته في البدء بها."}},"labels":{"tryK":"جرّبي هذا الأسبوع"}}},W3:{"title":"بعيون المستفيد","intro":{"p1":"كلما ابتعد القائد عن تفاصيل الخدمة اليومية، صار اعتماده على التقارير وما ينقله إليه الفريق أكبر. وقد لا يرى بعض الخطوات التي يمر بها المستفيد حتى لو كانت الخدمة تسير جيدًا في المؤشرات.","p2":"هذا الأسبوع، نريد أن نعرف كيف تصل إليك صورة تجربة المستفيد، ومتى كانت آخر مرة عشتها بنفسك."},"q1":{"label":"من أين تعرف؟","question":"عندما تريد معرفة كيف تسير الخدمة مع المستفيد، إلى أين تتجه غالبًا؟","options":{"أ":"أراجع التقارير ومؤشرات الخدمة.","ب":"أسأل الفريق المسؤول عن الخدمة.","ج":"أستمع إلى ملاحظات المستفيدين وشكاواهم.","د":"أستخدم الخدمة بنفسي لأرى ما يواجهه المستفيد."}},"q2":{"label":"متى كانت آخر مرة؟","question":"متى استخدمت إحدى خدمات قطاعك بنفسك، كما يستخدمها المستفيد العادي؟","options":{"أ":"خلال الشهر الماضي، وأكملت الخطوات بنفسي.","ب":"قبل عدة أشهر، وأكملت الخطوات بنفسي.","ج":"استخدمتها، لكن بمساعدة الفريق أو عبر مسار خاص.","د":"لا أذكر أنني استخدمتها بنفسي."}},"diagnoses":{"أ":{"title":"قريب من التجربة","description":"استخدمت الخدمة بنفسك مؤخرًا، وتعرف الخطوات التي يمر بها المستفيد من تجربة مباشرة. لكن تجربة واحدة لا تكشف كل ما يواجهه الآخرون، خصوصًا حين تختلف ظروف تجربتهم عن تجربتك.","experiment":"استخدم الخدمة مرة أخرى بظروف مختلفة عن تجربتك السابقة، كما يستخدمها مستفيد جديد، دون مساعدة أو تدخل من فريقك."},"ب":{"title":"متابعة من بعيد","description":"تعرف ما يحدث في الخدمة، لكن معرفتك الحالية تعتمد على ما يصل إليك من معلومات أكثر مما تعتمد على تجربتك الشخصية. وقد تمر تفاصيل صغيرة لا تظهر في التقارير أو الاجتماعات.","experiment":"استخدم إحدى خدمات قطاعك بنفسك من البداية حتى النهاية، ثم سجّل ما لاحظته وشاركه مع فريقك."},"ج":{"title":"تجربة مختلفة","description":"سبق أن استخدمت الخدمة، لكنك مررت بها بمساعدة الفريق أو عبر مسار مختلف عن المسار المعتاد. وقد تكون بعض الخطوات التي يتوقف عندها المستفيد غير ظاهرة لك.","experiment":"استخدم الخدمة من البداية كمستفيد عادي، دون إخبار الفريق أو طلب مساعدة خاصة."},"د":{"title":"بعيد عن التجربة","description":"تعرف الخدمة من التقارير وما ينقله إليك الفريق، لكنك لم تختبر خطواتها بنفسك. وقد يصعب ملاحظة ما يواجهه المستفيد حين لا تمر بما يمر به.","experiment":"اختر خدمة يستخدمها المستفيدون في قطاعك، وعِش دور المستفيد دون تدخل الفريق."}},"labels":{"resultK":"ماذا تقول إجاباتك؟","tryK":"جرّب هذا الأسبوع","start":"ابدأ النشاط","next":"التالي","prev":"السابق","showResult":"عرض النتيجة","finish":"إنهاء النشاط"},"f":{"q1":{"question":"عندما تريدين معرفة كيف تسير الخدمة مع المستفيد، إلى أين تتجهين غالبًا؟","label":"من أين تعرفين؟"},"diagnoses":{"أ":{"description":"استخدمتِ الخدمة بنفسك مؤخرًا، وتعرفين الخطوات التي يمر بها المستفيد من تجربة مباشرة. لكن تجربة واحدة لا تكشف كل ما يواجهه الآخرون، خصوصًا حين تختلف ظروف تجربتهم عن تجربتك.","experiment":"استخدمي الخدمة مرة أخرى بظروف مختلفة عن تجربتك السابقة، كما يستخدمها مستفيد جديد، دون مساعدة أو تدخل من فريقك."},"ب":{"description":"تعرفين ما يحدث في الخدمة، لكن معرفتك الحالية تعتمد على ما يصل إليك من معلومات أكثر مما تعتمد على تجربتك الشخصية. وقد تمر تفاصيل صغيرة لا تظهر في التقارير أو الاجتماعات.","experiment":"استخدمي إحدى خدمات قطاعك بنفسك من البداية حتى النهاية، ثم سجّلي ما لاحظتِه وشاركيه مع فريقك."},"ج":{"description":"سبق أن استخدمتِ الخدمة، لكنك مررتِ بها بمساعدة الفريق أو عبر مسار مختلف عن المسار المعتاد. وقد تكون بعض الخطوات التي يتوقف عندها المستفيد غير ظاهرة لك.","experiment":"استخدمي الخدمة من البداية كمستفيدة عادية، دون إخبار الفريق أو طلب مساعدة خاصة."},"د":{"description":"تعرفين الخدمة من التقارير وما ينقله إليك الفريق، لكنك لم تختبري خطواتها بنفسك. وقد يصعب ملاحظة ما يواجهه المستفيد حين لا تمرين بما يمر به.","experiment":"اختاري خدمة يستخدمها المستفيدون في قطاعك، وعيشي دور المستفيد دون تدخل الفريق."}},"labels":{"tryK":"جرّبي هذا الأسبوع"}}},W4:{"title":"فشل البرنامج التدريبي","intro":"وصلنا إلى 6 مارس 2027، بعد مرور 90 يومًا على انتهاء البرنامج التدريبي القيادة إلى ما بعد الأعمال الأساسية. فشل البرنامج فشلًا ذريعًا.","question":"ما الأسباب التي أوصلتنا إلى هذه النتيجة؟","guide":"اكتب بصراحة كل الأسباب التي تعتقد أنها أدت إلى ذلك، حتى لو كانت بسيطة أو غير مريحة. نريد أن نعرف ما الذي حدث خلال هذه الأشهر.","placeholder":"اكتب الأسباب التي تخطر ببالك...","submit":"إرسال الإجابة","thanks":"شكرًا لمشاركتك أفكارك بصراحة. سنعمل على دراسة ما كتبته، وستساعدنا هذه الآراء على فهم ما قد يعيق أثر البرنامج والعمل على إنجاحه. نتطلع إلى رؤيتك في الورشة.","f":{"guide":"اكتبي بصراحة كل الأسباب التي تعتقدين أنها أدت إلى ذلك، حتى لو كانت بسيطة أو غير مريحة. نريد أن نعرف ما الذي حدث خلال هذه الأشهر.","placeholder":"اكتبي الأسباب التي تخطر ببالك...","thanks":"شكرًا لمشاركتكِ أفكاركِ بصراحة. سنعمل على دراسة ما كتبتِه، وستساعدنا هذه الآراء على فهم ما قد يعيق أثر البرنامج والعمل على إنجاحه. نتطلع إلى رؤيتكِ في الورشة."},"addMore":"إضافة رد آخر"}};
+window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"المبيعات المباشرة","ring":["تجديد عقود عملائنا الحاليين بخطوات أقل","منتجاتنا الحكومية نفسها لجهة حكومية خليجية","بيع منتجاتنا باشتراك شهري بدل العقد"]},{"k":"risk-bc","ar":"المخاطر واستمرارية الأعمال","ring":["خطة طوارئ أسرع تحمي خدمات علم","خبرتنا في خطط الطوارئ لعملاء خارج علم","تقرير شهري عن المخاطر تشترك فيه الشركات"]},{"k":"privacy","ar":"الخصوصية وحوكمة البيانات","ring":["رد أسرع على طلبات الخصوصية داخل علم","خبرتنا في حماية البيانات لعملائنا","بيع بيانات لا تكشف هوية أصحابها"]},{"k":"international","ar":"الأعمال الدولية","ring":["تسليم أسرع لعملائنا الحاليين في الخارج","حلول الحج لدولة يأتي منها الحجاج","تأجير منصاتنا لدول أخرى بدل بيعها"]},{"k":"talent","ar":"إدارة المواهب والأكاديمية","ring":["برنامج تدريب أقصر وأوضح لموظفي علم","برامج أكاديمية علم لعملاء من خارجها","منصة تعلّم يدفع لها الناس اشتراكًا"]},{"k":"corp-it","ar":"عمليات التقنية المؤسسية","ring":["حل أعطال أجهزة الموظفين في وقت أقل","خدمة الدعم الفني لشركة تابعة","بيع خدمات تقنية المكاتب باشتراك شهري"]},{"k":"sales-support","ar":"دعم المبيعات","ring":["عروض أسعار أسرع لفريق البيع","تدريب الشركاء على بيع حلولنا","قناة يشتري منها العميل بنفسه دون مندوب"]},{"k":"hu-tech","ar":"تقنية الحج والعمرة","ring":["تصريح أسرع للحاج، بخطوات أقل","نظام التصاريح نفسه لمنظّمي الفعاليات الكبرى","بيع بيانات حركة الزوار لقطاع السياحة"]},{"k":"specs","ar":"المواصفات والمعايير","ring":["اعتماد المواصفات في وقت أقل","معاييرنا اللوجستية لميناء خليجي","شهادة مطابقة تدفع الشركات مقابلها"]},{"k":"bd-presales","ar":"تطوير الأعمال وما قبل البيع","ring":["عروض فنية أسرع لعملائنا الحاليين","تشغيل خدمات مستشفى نيابة عنه","أجر يُدفع حسب النتائج لا بالساعات"]},{"k":"process-out","ar":"إسناد العمليات","ring":["مركز اتصال يحل طلب العميل من أول مكالمة","خدمة مركز الاتصال نفسها لبنك","موظف رقمي ينجز المهام المتكررة للعملاء"]},{"k":"agility","ar":"الرشاقة والتميز المؤسسي","ring":["إجراءات أقصر داخل علم","تجهيز جهات حكومية لجوائز التميز","أداة تقيس نضج الجهات تُباع باشتراك"]},{"k":"strategy","ar":"الاستراتيجية والتخطيط","ring":["خطة سنوية أوضح ومتابعة أسهل","قدرات علم الحالية لقطاع الصحة","صندوق يستثمر في شركات ناشئة"]},{"k":"energy","ar":"الطاقة والموارد الطبيعية","ring":["تسليم أسرع لعملاء الطاقة الحاليين","حلولنا لشركة تعدين","سوق لبيع وشراء شهادات الكربون"]},{"k":"hu-products","ar":"منتجات الحج والعمرة","ring":["تطبيق أسهل للمعتمر بخطوات أقل","منتجاتنا لشركات السياحة","سوق يجمع خدمات الزوار في مكان واحد"]},{"k":"delivery-ex","ar":"تمكين التسليم والتميز","ring":["مشاريع تُسلَّم في وقتها بمراجعات أقل","طريقتنا في تسليم المشاريع لعملائنا","أجر يُدفع عند تحقق نتيجة المشروع"]},{"k":"mobility","ar":"التنقل","ring":["خدمة أسرع لأصحاب المركبات","منصتنا لشركات تأجير السيارات","تأمين سيارات يُدفع حسب الاستخدام"]},{"k":"logistics-air","ar":"الخدمات اللوجستية والجوية","ring":["إجراءات شحن أسرع لعملائنا الحاليين","منصتنا لمطار إقليمي","سوق تؤجر فيه الشركات مساحات الشحن الفارغة"]},{"k":"fin-report","ar":"التقارير والرقابة المالية","ring":["إقفال الحسابات الشهرية في أيام أقل","خدمة إقفال الحسابات لشركة تابعة","إدارة مالية كاملة نقدمها لشركات أخرى"]},{"k":"public-security","ar":"خدمات الأمن العام","ring":["خدمة أسرع للجهات الأمنية التي نخدمها","خدماتنا لشركات الحراسة","خدمة التحقق من الهوية تدفع الشركات مقابلها"]},{"k":"facilities","ar":"المرافق والخدمات الإدارية","ring":["طلبات صيانة تُنجز في وقت أقل","إدارة مرافق مبنى لعميل خارجي","تأجير مساحات العمل الفارغة"]},{"k":"shared-tech","ar":"الخدمات التقنية المشتركة","ring":["أنظمة تتوقف أقل للخدمات الحالية","بنيتنا التقنية لجهة جديدة","تأجير منصتنا لشركات أخرى"]},{"k":"tech-delivery","ar":"إدارة التسليم التقني","ring":["إصدارات أسرع للأنظمة العدلية الحالية","منصتنا العدلية لمكاتب المحاماة","خدمة تقدّر سعر العقار آليًا"]},{"k":"ceo-office","ar":"مكتب الرئيس التنفيذي","ring":["متابعة أسرع لقرارات الرئيس","قدرات علم لدولة شقيقة","الاستثمار في أفكار جديدة خارج علم"]}]},W1:{"q1":{"label":"أين يذهب وقتك؟","question":"عندما تنظر إلى أسبوعك الماضي، كيف تصف توزيع وقتك بين المسارات الثلاثة؟","hint":"اختر المسار الذي استحوذ على معظم وقتك. وإذا كان وقتك موزعًا بشكل متقارب بينها، اختر الخيار الأخير. وصنّف الاجتماعات بحسب موضوعها، لا لمجرد كونها اجتماعات.","options":{"أ":"إدارة الأعمال الحالية: متابعة التشغيل، معالجة المشكلات، ومتابعة الأداء.","ب":"تطوير الأعمال الحالية: تحسين خدمة أو منتج أو إجراء قائم.","ج":"استكشاف فرص جديدة: البحث عن احتياجات أو مجالات عمل جديدة.","د":"وقتي يتوزع بين هذه المسارات بشكل متقارب."}},"q2":{"label":"ماذا يحدث عندما تحاول التطوير؟","question":"عندما تحاول تخصيص وقت لتطوير عمل قائم أو استكشاف فرصة جديدة، ماذا يحدث غالبًا؟","options":{"أ":"لا أخصص وقتًا محددًا لذلك عادةً.","ب":"أخصص وقتًا، لكنه يتأجل أو يُلغى بسبب أمور عاجلة أو اجتماعات.","ج":"أجد الوقت، لكن يصعب عليّ تحديد الخطوة التالية.","د":"أتمكن من الاستفادة من الوقت وأحدد خطوة تالية."}},"diagnoses":{"أ":{"title":"انشغالك بالتشغيل يحد من مساحة التطوير.","description":"متابعة الأعمال اليومية ضرورية، لكن من المفيد أن تلاحظ مقدار المساحة المتاحة لتحسينها."},"ب":{"title":"تطوير الموجود يحظى باهتمامك، فماذا عن القادم؟","description":"تحسين الخدمات والإجراءات مهم، وكذلك الانتباه للاحتياجات والفرص التي قد تفتح مجالات جديدة."},"ج":{"title":"استكشاف الجديد لا يغني عن تطوير الموجود.","description":"البحث عن فرص جديدة مهم، ومن المفيد أن توازن بينه وبين تحسين الأعمال والخدمات الحالية."},"د":{"title":"توزّع اهتمامك بين المسارات الثلاثة.","description":"لديك مساحة من الاهتمام بالتشغيل والتطوير والاستكشاف، والسؤال هو كيف تحافظ على هذا التوازن وتوجهه."}},"sector":{"أ":"قد تكون فرص التطوير حاضرة في ذهنك، لكنها لم تتحول بعد إلى وقت مخصص لها.","ب":"قد تكون المشكلة في صعوبة حماية الوقت المخصص للتطوير من متطلبات العمل اليومية.","ج":"تخصيص الوقت خطوة مهمة، لكن تحويل الفكرة إلى خطوة عملية قد يحتاج إلى وضوح أكبر.","د":"لديك ممارسة تساعدك على تحويل الوقت المخصص للتطوير إلى تقدم ملموس."},"special":{"بأ":"يذهب جزء كبير من وقتك إلى هذا المسار، لكنه يأتي غالبًا دون تخطيط مسبق. تخصيص وقت محدد له قد يجعله أكثر انتظامًا.","جأ":"يذهب جزء كبير من وقتك إلى هذا المسار، لكنه يأتي غالبًا دون تخطيط مسبق. تخصيص وقت محدد له قد يجعله أكثر انتظامًا."},"tryOut":{"p1":"اختر عملًا أو خدمة أو إجراءً في قطاعك ترى أنه يستحق التطوير، أو فرصة جديدة تستحق الاستكشاف.","p2":"جرّب أن تتخذ خطوة صغيرة هذا الأسبوع،","cap":"ساعة واحدة تكفي","p3":"ثم لاحظ:","i1":"ما الخطوة التي اتخذتها؟","i2":"ماذا اكتشفت أو تعلمت؟","i3":"ما الذي تحتاجه للانتقال إلى الخطوة التالية؟","closing":"ليس المطلوب أن تغيّر طريقة عملك بالكامل، بل أن تلاحظ أين يذهب وقتك، وما الذي يمكنك أن تفعله به."},"labels":{"resultK":"نتيجتك في هذا الأسبوع","sectorK":"عندما تحاول التطوير","tryK":"جرّب هذا الأسبوع","tryBtn":"جرّب هذا الأسبوع","next":"التالي","prev":"السابق","showResult":"عرض النتيجة","finish":"إنهاء النشاط"},"f":{}},W1I:{"title":"أين يذهب أسبوعك؟","intro":{"head":"تقويمك يتكلم","p1":"تقويمك يوضح كيف تقضي وقتك، وليس فقط كيف تخطط له.","p2":"قد تكون من أولوياتك تطوير العمل والتفكير في المستقبل، لكن مراجعة تقويمك قد تكشف لك أين يذهب معظم وقتك فعلًا، وما المساحة التي تمنحها لما يتجاوز متطلبات اليوم.","note1":"لا توجد إجابة صحيحة أو خاطئة.","note2":"الهدف أن تلاحظ نمطًا في أسبوعك قد لا تنتبه إليه وسط انشغالك اليومي.","hz":{"head":"قبل أن تبدأ: ثلاثة مسارات للأعمال","lead":"لفهم طريقة توزيع وقتك، تعرّف على ثلاثة أنواع من العمل:","exK":"أمثلة","h1":{"k":"المسار الأول","name":"إدارة الأعمال الحالية","def":"كل ما يرتبط بتشغيل الخدمات والمنتجات ومتابعة سير العمل ومعالجة المشكلات اليومية.","ex1":"متابعة أداء الخدمات والعمليات.","ex2":"معالجة المشكلات التشغيلية.","ex3":"متابعة الالتزامات والمهام القائمة.","ex4":"ضمان استمرارية العمل."},"h2":{"k":"المسار الثاني","name":"تطوير الأعمال الحالية","def":"كل ما يهدف إلى تحسين الخدمات والمنتجات والإجراءات القائمة ورفع كفاءتها.","ex1":"تحسين خطوات خدمة قائمة.","ex2":"معالجة أسباب مشكلة متكررة.","ex3":"تطوير إجراء لتقليل الوقت والجهد.","ex4":"تحسين تجربة المستفيد في خدمة حالية."},"h3":{"k":"المسار الثالث","name":"استكشاف فرص جديدة","def":"كل ما يتعلق بالبحث عن احتياجات وفرص جديدة قد تفتح مجالات عمل أو خدمات مختلفة.","ex1":"استكشاف احتياجات جديدة لدى المستفيدين.","ex2":"دراسة فرصة لتقديم خدمة جديدة.","ex3":"البحث عن مجالات عمل جديدة.","ex4":"اختبار فكرة قد تفتح فرصة مستقبلية لقطاعك."}}},"f":{"intro":{"head":"تقويمك يتكلم","p1":"تقويمك يوضح كيف تقضين وقتك، وليس فقط كيف تخططين له.","p2":"قد تكون من أولوياتك تطوير العمل والتفكير في المستقبل، لكن مراجعة تقويمك قد تكشف لك أين يذهب معظم وقتك فعلًا، وما المساحة التي تمنحينها لما يتجاوز متطلبات اليوم.","note2":"الهدف أن تلاحظي نمطًا في أسبوعك قد لا تنتبهين إليه وسط انشغالك اليومي.","hz":{"lead":"لفهم طريقة توزيع وقتك، تعرّفي على ثلاثة أنواع من العمل:","h3":{"ex4":"اختبار فكرة قد تفتح فرصة مستقبلية لقطاعك."}}}}},W2:{"title":"أفكار على الرف","intro":{"p1":"بعض الأفكار لا تُرفض، لكنها تبقى مؤجلة حتى ينشغل عنها أصحابها وينسونها. وأحيانًا تكون طريقة استقبالنا للفكرة، أو أول سؤال نطرحه عنها، سببًا في توقفها.","p2":"في هذا النشاط، ستراجع ما يحدث للأفكار الجديدة في فريقك، وكيف تستقبلها، ثم تتعرف على خطوة صغيرة يمكنك تجربتها هذا الأسبوع."},"q1":{"label":"ماذا يحدث للأفكار؟","question":"عندما يطرح أحد أفراد فريقك فكرة جديدة، ولا تكون نتائجها واضحة، ماذا يحدث عادة؟","options":{"أ":"نناقشها، لكن نؤجل النظر فيها حتى تتضح الصورة.","ب":"نطلب من صاحبها دراسة الفكرة أكثر قبل أن نقرر.","ج":"نبحث عن طريقة صغيرة لتجربتها قبل الحكم عليها.","د":"ننشغل بالأفكار التي نعرف أنها ستحقق نتيجة."}},"q2":{"label":"كيف تستقبل الفكرة؟","question":"حين يعرض عليك أحد أفراد فريقك فكرة جديدة، ما أول ما تسأله عادة؟","options":{"أ":"هل سبق أن جُرّبت؟ وما النتائج المتوقعة؟","ب":"ما أصغر خطوة يمكن أن نبدأ بها؟","ج":"من سيتولى العمل عليها؟ وكم ستحتاج من الوقت؟","د":"ما الذي تحتاجه مني لتبدأ؟"}},"diagnoses":{"أ":{"title":"الدليل قبل التجربة","description":"حين تُعرض عليك فكرة، تبحث أولًا عن دليل يثبت أنها تستحق المحاولة. وقد ينتقل هذا التوقع إلى الفريق، فيتردد أفراده في طرح أفكار لم تُختبر بعد.","experiment":"اختر فكرة لم تُجرّب من قبل، واسأل صاحبها كيف يمكن اختبارها على نطاق صغير قبل طلب دراسة إضافية."},"ب":{"title":"الفكرة تنتظر","description":"تبحث عن طريقة لتجربة الفكرة قبل الحكم عليها. لكن قد تبقى بعض الأفكار في مرحلة النقاش، حتى مع وجود استعداد لتجربتها.","experiment":"اختر فكرة نوقشت سابقًا، واتفق مع صاحبها على تجربة على نطاق صغير."},"ج":{"title":"الوقت والقدرة","description":"تنتقل سريعًا إلى السؤال عن الوقت والشخص الذي سيتولى الفكرة. وقد يتوقف النقاش عند هذه النقطة، خصوصًا حين تكون مسؤوليات الفريق ممتلئة.","experiment":"اختر فكرة مؤجلة، وابحث مع صاحبها عن طريقة لتجربتها، مع تخصيص وقت وموارد تناسب حجم التجربة."},"د":{"title":"الدعم يحتاج خطوة","description":"تترك لصاحب الفكرة مساحة ليشرح ما يحتاجه منك. لكن قد ينتهي الحديث دون اتفاق واضح على الخطوة التالية، فتعود الفكرة إلى مكانها مجرد فكرة.","experiment":"اسأل أحد أفراد فريقك عن فكرة متوقفة، واتفق معه على خطوات يمكنك مساعدته في البدء بها."}},"observations":{"أ":{"title":"الأفكار المؤجلة","description":"بعض الأفكار تبقى معلّقة حتى تتضح الصورة، ثم تنشغلون عنها بأمور أخرى."},"ب":{"title":"الحاجة إلى مزيد من الدراسة","description":"قد تحتاج الفكرة إلى أكثر من جولة من الدراسة قبل أن تجد فرصة للمحاولة."},"ج":{"title":"فرصة للتجربة","description":"تجد الأفكار فرصة للمحاولة، حتى قبل أن تتضح نتائجها بالكامل."},"د":{"title":"الأولوية للمضمون","description":"تميل الأولوية إلى الأعمال التي تعرفون نتائجها، وتنتظر الأفكار الجديدة وقتًا مناسبًا."}},"labels":{"resultK":"قراءتك للنتيجة","teamK":"ما الذي يحدث للأفكار في فريقك؟","tryK":"جرّب هذا الأسبوع","showResult":"عرض نتيجتك","next":"التالي","prev":"السابق"},"f":{"intro":{"p2":"في هذا النشاط، ستراجعين ما يحدث للأفكار الجديدة في فريقك، وكيف تستقبلينها، ثم تتعرفين على خطوة صغيرة يمكنك تجربتها هذا الأسبوع."},"q2":{"label":"كيف تستقبلين الفكرة؟","question":"حين يعرض عليك أحد أفراد فريقك فكرة جديدة، ما أول ما تسألينه عادة؟"},"diagnoses":{"أ":{"description":"حين تُعرض عليك فكرة، تبحثين أولًا عن دليل يثبت أنها تستحق المحاولة. وقد ينتقل هذا التوقع إلى الفريق، فيتردد أفراده في طرح أفكار لم تُختبر بعد.","experiment":"اختاري فكرة لم تُجرّب من قبل، واسألي صاحبها كيف يمكن اختبارها على نطاق صغير قبل طلب دراسة إضافية."},"ب":{"description":"تبحثين عن طريقة لتجربة الفكرة قبل الحكم عليها. لكن قد تبقى بعض الأفكار في مرحلة النقاش، حتى مع وجود استعداد لتجربتها.","experiment":"اختاري فكرة نوقشت سابقًا، واتفقي مع صاحبها على تجربة على نطاق صغير."},"ج":{"description":"تنتقلين سريعًا إلى السؤال عن الوقت والشخص الذي سيتولى الفكرة. وقد يتوقف النقاش عند هذه النقطة، خصوصًا حين تكون مسؤوليات الفريق ممتلئة.","experiment":"اختاري فكرة مؤجلة، وابحثي مع صاحبها عن طريقة لتجربتها، مع تخصيص وقت وموارد تناسب حجم التجربة."},"د":{"description":"تتركين لصاحب الفكرة مساحة ليشرح ما يحتاجه منك. لكن قد ينتهي الحديث دون اتفاق واضح على الخطوة التالية، فتعود الفكرة إلى مكانها مجرد فكرة.","experiment":"اسألي أحد أفراد فريقك عن فكرة متوقفة، واتفقي معه على خطوات يمكنك مساعدته في البدء بها."}},"labels":{"tryK":"جرّبي هذا الأسبوع"}}},W3:{"title":"بعيون المستفيد","intro":{"p1":"كلما ابتعد القائد عن تفاصيل الخدمة اليومية، صار اعتماده على التقارير وما ينقله إليه الفريق أكبر. وقد لا يرى بعض الخطوات التي يمر بها المستفيد حتى لو كانت الخدمة تسير جيدًا في المؤشرات.","p2":"هذا الأسبوع، نريد أن نعرف كيف تصل إليك صورة تجربة المستفيد، ومتى كانت آخر مرة عشتها بنفسك."},"q1":{"label":"من أين تعرف؟","question":"عندما تريد معرفة كيف تسير الخدمة مع المستفيد، إلى أين تتجه غالبًا؟","options":{"أ":"أراجع التقارير ومؤشرات الخدمة.","ب":"أسأل الفريق المسؤول عن الخدمة.","ج":"أستمع إلى ملاحظات المستفيدين وشكاواهم.","د":"أستخدم الخدمة بنفسي لأرى ما يواجهه المستفيد."}},"q2":{"label":"متى كانت آخر مرة؟","question":"متى استخدمت إحدى خدمات قطاعك بنفسك، كما يستخدمها المستفيد العادي؟","options":{"أ":"خلال الشهر الماضي، وأكملت الخطوات بنفسي.","ب":"قبل عدة أشهر، وأكملت الخطوات بنفسي.","ج":"استخدمتها، لكن بمساعدة الفريق أو عبر مسار خاص.","د":"لا أذكر أنني استخدمتها بنفسي."}},"diagnoses":{"أ":{"title":"قريب من التجربة","description":"استخدمت الخدمة بنفسك مؤخرًا، وتعرف الخطوات التي يمر بها المستفيد من تجربة مباشرة. لكن تجربة واحدة لا تكشف كل ما يواجهه الآخرون، خصوصًا حين تختلف ظروف تجربتهم عن تجربتك.","experiment":"استخدم الخدمة مرة أخرى بظروف مختلفة عن تجربتك السابقة، كما يستخدمها مستفيد جديد، دون مساعدة أو تدخل من فريقك."},"ب":{"title":"متابعة من بعيد","description":"تعرف ما يحدث في الخدمة، لكن معرفتك الحالية تعتمد على ما يصل إليك من معلومات أكثر مما تعتمد على تجربتك الشخصية. وقد تمر تفاصيل صغيرة لا تظهر في التقارير أو الاجتماعات.","experiment":"استخدم إحدى خدمات قطاعك بنفسك من البداية حتى النهاية، ثم سجّل ما لاحظته وشاركه مع فريقك."},"ج":{"title":"تجربة مختلفة","description":"سبق أن استخدمت الخدمة، لكنك مررت بها بمساعدة الفريق أو عبر مسار مختلف عن المسار المعتاد. وقد تكون بعض الخطوات التي يتوقف عندها المستفيد غير ظاهرة لك.","experiment":"استخدم الخدمة من البداية كمستفيد عادي، دون إخبار الفريق أو طلب مساعدة خاصة."},"د":{"title":"بعيد عن التجربة","description":"تعرف الخدمة من التقارير وما ينقله إليك الفريق، لكنك لم تختبر خطواتها بنفسك. وقد يصعب ملاحظة ما يواجهه المستفيد حين لا تمر بما يمر به.","experiment":"اختر خدمة يستخدمها المستفيدون في قطاعك، وعش دور المستفيد دون تدخل الفريق."}},"labels":{"resultK":"ماذا تقول إجاباتك؟","tryK":"جرّب هذا الأسبوع","start":"ابدأ النشاط","next":"التالي","prev":"السابق","showResult":"عرض النتيجة","finish":"إنهاء النشاط"},"f":{"q1":{"question":"عندما تريدين معرفة كيف تسير الخدمة مع المستفيد، إلى أين تتجهين غالبًا؟","label":"من أين تعرفين؟"},"diagnoses":{"أ":{"description":"استخدمت الخدمة بنفسك مؤخرًا، وتعرفين الخطوات التي يمر بها المستفيد من تجربة مباشرة. لكن تجربة واحدة لا تكشف كل ما يواجهه الآخرون، خصوصًا حين تختلف ظروف تجربتهم عن تجربتك.","experiment":"استخدمي الخدمة مرة أخرى بظروف مختلفة عن تجربتك السابقة، كما يستخدمها مستفيد جديد، دون مساعدة أو تدخل من فريقك."},"ب":{"description":"تعرفين ما يحدث في الخدمة، لكن معرفتك الحالية تعتمد على ما يصل إليك من معلومات أكثر مما تعتمد على تجربتك الشخصية. وقد تمر تفاصيل صغيرة لا تظهر في التقارير أو الاجتماعات.","experiment":"استخدمي إحدى خدمات قطاعك بنفسك من البداية حتى النهاية، ثم سجّلي ما لاحظته وشاركيه مع فريقك."},"ج":{"description":"سبق أن استخدمت الخدمة، لكنك مررت بها بمساعدة الفريق أو عبر مسار مختلف عن المسار المعتاد. وقد تكون بعض الخطوات التي يتوقف عندها المستفيد غير ظاهرة لك.","experiment":"استخدمي الخدمة من البداية كمستفيدة عادية، دون إخبار الفريق أو طلب مساعدة خاصة."},"د":{"description":"تعرفين الخدمة من التقارير وما ينقله إليك الفريق، لكنك لم تختبري خطواتها بنفسك. وقد يصعب ملاحظة ما يواجهه المستفيد حين لا تمرين بما يمر به.","experiment":"اختاري خدمة يستخدمها المستفيدون في قطاعك، وعيشي دور المستفيد دون تدخل الفريق."}},"labels":{"tryK":"جرّبي هذا الأسبوع"}}},W4:{"title":"فشل البرنامج التدريبي","intro":"وصلنا إلى 6 مارس 2027، بعد مرور 90 يومًا على انتهاء برنامج التميز في الابتكار القيادي. فشل البرنامج فشلًا ذريعًا.","question":"ما الأسباب التي أوصلتنا إلى هذه النتيجة؟","guide":"اكتب بصراحة كل الأسباب التي تعتقد أنها أدت إلى ذلك، حتى لو كانت بسيطة أو غير مريحة. نريد أن نعرف ما الذي حدث خلال هذه الأشهر.","placeholder":"اكتب الأسباب التي تخطر ببالك...","submit":"إرسال الإجابة","thanks":"شكرًا لمشاركتك أفكارك بصراحة. سنعمل على دراسة ما كتبته، وستساعدنا هذه الآراء على فهم ما قد يعيق أثر البرنامج والعمل على إنجاحه. نتطلع إلى رؤيتك في الورشة.","f":{"guide":"اكتبي بصراحة كل الأسباب التي تعتقدين أنها أدت إلى ذلك، حتى لو كانت بسيطة أو غير مريحة. نريد أن نعرف ما الذي حدث خلال هذه الأشهر.","placeholder":"اكتبي الأسباب التي تخطر ببالك...","thanks":"شكرًا لمشاركتك أفكارك بصراحة. سنعمل على دراسة ما كتبته، وستساعدنا هذه الآراء على فهم ما قد يعيق أثر البرنامج والعمل على إنجاحه. نتطلع إلى رؤيتك في الورشة."},"addMore":"إضافة رد آخر"}};
 </script>
 <script>
 /* بوصلة القائد · الهيكل المشترك للموقع الحي (site/).
@@ -1934,7 +1932,8 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
     const mail = () => ` <a class="b-mail" href="mailto:${C.contactEmail}"><bdi dir="ltr">${C.contactEmail}</bdi></a>`;
 
     /* الحلقة: من النظام */
-    const bz = Bezel.mount($('#bezel'));
+    $('#bezel').classList.add('b-flow');
+    const bz = Bezel.mount($('#bezel'), { layout: false });   /* الموضع يحسبه place() أدناه: البوصلة والبطاقة/النص وحدة واحدة في وسط الشاشة */
     /* بوصلة الأسابيع في كل الشاشات (الترحيب وكلمة المرور والدخول والرئيسية). الرئيسية تحدّث الأسبوع الحالي */
     bz.compass({ current: App.currentWeek(), done: [] });
 
@@ -1968,7 +1967,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
       <h1 class="b-display b-rise" id="h" tabindex="-1" style="--i:0">${esc(T('intro.hello'))}</h1>
       <p class="b-lead b-rise" style="--i:1">${lead}</p>
       <p class="b-body b-rise" style="--i:2">${esc(T('intro.week'))}</p>
-      <ul class="b-facts b-rise" style="--i:3">${fact(ICON.clock, T('intro.time'))}${weekFact() ? fact(ICON.cal, weekFact()) : ''}</ul>
+      <ul class="b-facts b-rise" style="--i:3">${fact(ICON.clock, T('intro.time'))}</ul>
       <p class="b-from b-rise" style="--i:4">${esc(T('intro.from'))}<br>${mail()}</p>
       ${primary(key === 'about' ? T('back') : T('intro.cta'), 'button', ' b-rise" style="--i:5')}</div></section>`;
       }
@@ -2011,7 +2010,6 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
       return '';
     }
     /* سطر الأسبوع في الترحيب: قبل 8 نوفمبر موعد الأول، ثم الأسبوع المفتوح الآن، وبعد قفل الأخير لا سطر */
-    function weekFact() { const c = App.currentWeek(), st = App.stateOf(c); return st === 'soon' ? T('intro.first') : st === 'open' ? T('open.w' + c) : ''; }
     function wkTitle(n) { const t = T('home.week' + n), i = t.indexOf('·'); return i < 0 ? esc(t) : `<span class="b-wk-k">${esc(t.slice(0, i).trim())}</span><span class="b-vh"> · </span><span class="b-wk-name">${esc(t.slice(i + 1).trim())}</span>`; }
     /* حالة الأسبوع الحالي من الخادم (app.js): soon قبل الأحد 8 نوفمبر، ثم open لكل أسبوع حتى الأحد التالي، وبعد 6 ديسمبر closed */
     const wkOf = s => s.week || { week: 1, state: s.weekOpen ? 'open' : 'soon' };
@@ -2020,7 +2018,8 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
       const w = wkOf(s), n = w.week || 1, end = App.endDay(n);
       const doneW = (w.weeks || []).filter(x => x.done).map(x => x.week);
       if (w.done && !doneW.includes(n)) doneW.push(n);
-      const fin = !w.test && (w.done || w.state === 'closed');   /* حساب التجربة: الرئيسية نفسها دائمًا، مع اختيار الأسبوع */
+      const fin = !w.test && (w.done || w.state === 'closed');
+      const openW = (w.weeks || []).filter(x => x.state === 'open').map(x => x.week);   /* حساب التجربة: أزرار الأسابيع المفتوحة فقط */   /* حساب التجربة: الرئيسية نفسها دائمًا، مع اختيار الأسبوع */
       /* البوصلة: الإبرة على الأسبوع الحالي؛ بعد إنهائه تدور إلى التالي (والأخير يبقى عليه) */
       bz.compass(fin && n < 4 ? { current: n + 1, done: doneW, from: n } : { current: n, done: doneW }); home.classList.toggle('has-compass', !fin);
       let line, note = '', go = '';
@@ -2046,8 +2045,8 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
       home.innerHTML = `<h1 class="b-home-h" id="hh" tabindex="-1">${esc(T('home.hello'))}</h1>
     <div class="b-wk" role="group" aria-labelledby="wkt" data-week="${n}">
       <p class="b-wk-t" id="wkt">${wkTitle(n)}</p>
-      <p class="b-wk-w">${line}</p>${go}</div>
-    <div class="b-home-low">${w.test ? `<div class="b-wk-pick" role="group" aria-label="${esc(T('test.pick'))}">${[1, 2, 3, 4].map(k => `<button type="button" class="b-chip" data-pick="${k}" aria-pressed="${k === n}">${esc(App.weekLabel(k))}${doneW.includes(k) ? ICON.check : ''}</button>`).join('')}</div>` : ''}${note ? `<p class="b-wk-n">${esc(note)}</p>` : ''}
+      ${w.state === 'open' ? '' : `<p class="b-wk-w">${line}</p>`}${go}</div>
+    <div class="b-home-low">${w.test && openW.length > 1 ? `<div class="b-wk-pick" role="group" aria-label="${esc(T('test.pick'))}">${openW.map(k => `<button type="button" class="b-chip" data-pick="${k}" aria-pressed="${k === n}">${esc(App.weekLabel(k))}${doneW.includes(k) ? ICON.check : ''}</button>`).join('')}</div>` : ''}${note ? `<p class="b-wk-n">${esc(note)}</p>` : ''}
       <button type="button" class="b-link" data-act="about">${esc(T('home.about'))}</button></div>`;
       homeSig = sigOf(s);
     }
@@ -2128,12 +2127,62 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
       } else cardIn.innerHTML = html;
       cur = { key, root: cardIn.firstElementChild, focusOk: mode !== 'init' }; prevErr = {}; prevLock = false;
     }
+    /* ---------- التموضع (طلب نادر 4 نوفمبر): البوصلة وما يرافقها (بطاقة الترحيب/كلمة المرور، أو نص الرئيسية)
+       وحدة واحدة في وسط الشاشة بأي مقاس، والمسافة بينهما ثابتة: 24px على الجوال، 64px على اللابتوب ---------- */
+    const GAP_M = 24, GAP_W = 64, WIDE = 900;
+    function setRing(d, cx, cy) { root.style.setProperty('--d', Math.round(d) + 'px'); root.style.setProperty('--cx', Math.round(cx) + 'px'); root.style.setProperty('--cy', Math.round(cy) + 'px'); }
+    function place() {
+      const vw = innerWidth, vh = innerHeight, wide = vw >= WIDE;
+      const topEl = document.querySelector('.b-top'), top = (topEl ? topEl.offsetTop + topEl.offsetHeight : 56) + (wide ? 16 : 12), bot = wide ? 32 : 16;
+      const avail = vh - top - bot;
+      const onHome = !home.hidden && home.classList.contains('has-compass');
+      if (onHome) {
+        const hH = home.querySelector('.b-home-h'), wk = home.querySelector('.b-wk'), low = home.querySelector('.b-home-low');
+        if (!wk) return;
+        if (wide) {
+          const tw = 360, d = Math.max(240, Math.min(500, vh * .5, vw - tw - GAP_W - 160)), x0 = (vw - (d + GAP_W + tw)) / 2, cy = top + avail / 2;
+          setRing(d, x0 + d / 2, cy);
+          /* عمود النص: التحية، ثم الأسبوع، ثم الملاحظة، بمسافات ثابتة، ومركزه على مركز البوصلة */
+          const h1 = hH ? hH.offsetHeight : 0, wkH = wk.offsetHeight, lowH = low ? low.offsetHeight : 0, G1 = 32, G2 = 16;
+          const y0 = Math.round(cy - (h1 + G1 + wkH + G2 + lowH) / 2);
+          root.style.setProperty('--hy', y0 + 'px'); root.style.setProperty('--wy', y0 + h1 + G1 + 'px'); root.style.setProperty('--ly', y0 + h1 + G1 + wkH + G2 + 'px');
+        } else {
+          const h1 = hH ? hH.offsetHeight : 0, wkH = wk.offsetHeight, lowH = low ? low.offsetHeight : 0;
+          root.style.setProperty('--wkh', wkH + 'px');
+          const rest = h1 + 34 + 18 + wkH + 12 + lowH, d = Math.max(120, Math.min(300, vw * .74, avail - rest)), y0 = top + Math.max(0, (avail - rest - d) / 2);
+          setRing(d, vw / 2, y0 + h1 + 34 + d / 2);
+        }
+        return;
+      }
+      const box = !stage.hidden ? card : home.querySelector('.b-next');
+      const host = !stage.hidden ? stage : home;
+      if (!box) return;
+      const ch = box.offsetHeight, cw = box.offsetWidth;
+      if (wide) {
+        const d = Math.max(240, Math.min(500, vh * .55, vw - cw - GAP_W - 160)), x0 = Math.max(24, (vw - (d + GAP_W + cw)) / 2), cy = top + avail / 2;
+        setRing(d, x0 + d / 2, cy);
+        Object.assign(host.style, { display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-end',
+          paddingTop: Math.max(top, cy - ch / 2) + 'px', paddingBottom: bot + 'px', paddingLeft: x0 + d + GAP_W + 'px', paddingRight: '0px' });
+        box.style.margin = '0';
+      } else {
+        const d = Math.max(120, Math.min(300, vw * .74, avail - ch - GAP_M)), y0 = top + Math.max(0, (avail - ch - GAP_M - d) / 2);
+        setRing(d, vw / 2, y0 + d / 2);
+        Object.assign(host.style, { display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'stretch',
+          paddingTop: y0 + d + GAP_M + 'px', paddingBottom: bot + 'px', paddingLeft: '', paddingRight: '' });
+      }
+    }
+    let placeRaf = 0;
+    function schedulePlace() { cancelAnimationFrame(placeRaf); placeRaf = requestAnimationFrame(() => { place(); placeRaf = requestAnimationFrame(place); }); }
+    let placeT = 0; addEventListener('resize', () => { clearTimeout(placeT); placeT = setTimeout(place, 120); }, { signal: ac.signal });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedulePlace);
+
     function render(s) {
       const key = s.about ? 'about' : s.screen, kind = s.transition && s.transition.kind, first = Bosla.state.firstVisit;
       const st = !s.leader ? 'idle' : (first && key !== 'home' && key !== 'about' ? 'unset' : 'set');
       if (key !== cur.key) {
         const from = cur.key, initial = from == null;
         if (key === 'home') {
+          if (scrollY) scrollTo(0, 0);   /* البطاقة الطويلة قد تكون مُمرّرة: الرئيسية تبدأ من الأعلى */
           buildHome(s);
           const sig = kind === 'signature' && !initial;
           if (sig) {
@@ -2162,6 +2211,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
         if (key === 'home' && sigOf(s) !== homeSig) { const hadFocus = document.activeElement && home.contains(document.activeElement); buildHome(s); if (hadFocus) $('#hh').focus({ preventScroll: true }); }
       }
       patch(s);
+      place(); schedulePlace();
     }
     return {
       render,
@@ -2178,23 +2228,28 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
 
 </script>
 <script>
-/* بوصلة القائد · تعريف الأسبوع الأول = designs/W1-intro2/ring0/src.html (المعتمد) كما هو:
- * الخطوة 0 بطاقة «أين يذهب أسبوعك؟» مع التقويم الذي يمتلئ (planning/W1-INTRO-DRAFT.json، والمؤنث من f)، ثم «الحلقة» 4 خطوات.
- * الفروق: أمثلة الآفاق من إدارة القائد الحقيقية (لا ?d=)، وأُزيلت قائمة «للتجربة فقط» و?s= و#seen،
- * و«تابع» ينقل إلى الأسئلة داخل الموقع، والنصوص المعتمدة من الأدمن (w1.title، w1.intro.*، dept.*.ring.*) تُطبَّق.
+/* بوصلة القائد · تعريف الأسبوع الأول (اعتمده نادر 4 نوفمبر):
+ * خمس خطوات في بطاقة واحدة بمقاس ثابت (لا تتغير بين الخطوات):
+ *   0 «تقويمك يتكلم» (التصميم 5: التطمين في صندوق)
+ *   1 «قبل أن تبدأ: ثلاثة آفاق للعمل» مع دليل الألوان
+ *   2..4 الأفق الأول والثاني والثالث: التعريف والأمثلة (التصميم 5 «التقويم يتلوّن»)
+ * التقويم المشترك يتلوّن حسب الخطوة. النصوص من planning/W1-INTRO-DRAFT.json (intro.*، intro.hz.*، والمؤنث من f) بعد تعديلات الأدمن.
+ * «تابع» في الخطوة الأخيرة ينقل إلى الأسئلة. لا انتقال إلا بفعل المستخدم.
  */
 (function () {
   window.BoslaViews = window.BoslaViews || {};
+  const DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
+  /* خانات الأسبوع (5 أيام × 6 فترات، صفًا صفًا): 1 إدارة، 2 تطوير، 3 استكشاف، 0 فراغ */
+  const CELLS = '110211121011211012310112121101'.split('').map(Number);
   const MARKUP = `<div class="b-photo" aria-hidden="true"></div>
-<div class="b-bezel" id="bezel" aria-hidden="true"></div>
 <header class="b-top"><span class="b-plate" id="plate"></span><span class="b-brand">بوصلة القائد</span></header>
 <main id="app" data-screen="w1-intro">
+  <div id="journey"></div>
   <div id="ringUI">
-    <h1 class="x-title b-rise" style="--i:0">الآفاق الثلاثة للابتكار</h1>
-    <div class="x-intro has-vis" id="xintro" hidden><div class="vis v1" aria-hidden="true"><div class="grid"><div class="day"><i class="b p" style="--d:300ms"></i><i class="b p" style="--d:355ms"></i><i class="b p" style="--d:410ms"></i><i class="b p" style="--d:465ms"></i><i class="b p" style="--d:520ms"></i><i class="b p" style="--d:575ms"></i></div><div class="day"><i class="b"></i><i class="b p" style="--d:630ms"></i><i class="b p" style="--d:685ms"></i><i class="b p" style="--d:740ms"></i><i class="b f"></i><i class="b p" style="--d:795ms"></i></div><div class="day"><i class="b p" style="--d:850ms"></i><i class="b p" style="--d:905ms"></i><i class="b p" style="--d:960ms"></i><i class="b p" style="--d:1015ms"></i><i class="b"></i><i class="b p" style="--d:1070ms"></i></div><div class="day"><i class="b p" style="--d:1125ms"></i><i class="b f"></i><i class="b p" style="--d:1180ms"></i><i class="b p" style="--d:1235ms"></i><i class="b p" style="--d:1290ms"></i><i class="b p" style="--d:1345ms"></i></div><div class="day"><i class="b p" style="--d:1400ms"></i><i class="b p" style="--d:1455ms"></i><i class="b"></i><i class="b p" style="--d:1510ms"></i><i class="b p" style="--d:1565ms"></i><i class="b p" style="--d:1620ms"></i></div></div></div><div><h2 data-r="title"></h2><p data-r="p1"></p><p data-r="p2"></p></div></div>
-    <div class="x-in" id="inner"></div>
-    <p class="x-lbl fut" id="lblFut" aria-hidden="true"></p>
-    <p class="x-lbl now" id="lblNow" aria-hidden="true"></p>
+    <section class="x-card" id="xcard" aria-roledescription="خطوات">
+      <div class="x-vis" aria-hidden="true"><div class="x-days">${DAYS.map(d => `<span>${d}</span>`).join('')}</div><div class="x-cal" id="cal">${CELLS.map(k => `<i data-k="${k}"></i>`).join('')}</div></div>
+      <div class="x-panels" id="panels"></div>
+    </section>
     <div class="x-foot" id="foot"></div>
   </div>
   <p class="b-vh" id="live" aria-live="polite" aria-atomic="true"></p>
@@ -2204,135 +2259,72 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
   function create(hostEl, opts) {
     const ac = new AbortController(), on = (t, ev, fn) => t.addEventListener(ev, fn, { signal: ac.signal });
     hostEl.innerHTML = MARKUP;
-    const $ = s => hostEl.querySelector(s), $$ = s => [...hostEl.querySelectorAll(s)], { esc, I } = BUI, root = document.documentElement;
-    const RM = matchMedia('(prefers-reduced-motion: reduce)'), WIDE = matchMedia('(min-width:900px)');
+    const $ = s => hostEl.querySelector(s), { esc, I } = BUI, root = document.documentElement;
+    const RM = matchMedia('(prefers-reduced-motion: reduce)');
     const timers = new Set(), later = (fn, ms) => { const id = setTimeout(() => { timers.delete(id); fn(); }, ms); timers.add(id); };
     (function () { const im = new Image(66, 26); im.className = 'b-logo'; im.alt = 'علم'; im.src = 'data:image/png;base64,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'; $('#plate').appendChild(im); })();
     document.title = 'بوصلة القائد · الأسبوع الأول';
 
-    const H = [
-      /* نصوص الحلقة المبسطة (اعتمدها نادر 2 نوفمبر): سطر صغير «الأفق · الزمن»، وجملة واضحة، ومثال من أعمال القائد في مربع */
-      { k: 'الأفق الأول', when: 'اليوم', name: 'نحسّن ما نقدمه اليوم', ex: 'تصريح أسرع للحاج، بخطوات أقل' },
-      { k: 'الأفق الثاني', when: 'فرص مجاورة', name: 'نصل لعملاء جدد، أو نقدّم خدمة جديدة', ex: 'محرك التصاريح نفسه لمنظّمي الفعاليات الكبرى' },
-      { k: 'الأفق الثالث', when: 'المستقبل', name: 'نبني شيئًا لم يوجد بعد', ex: 'بيع تحليلات حركة الزوار لقطاع السياحة' }];
-    /* أمثلة الآفاق من إدارة القائد (planning/CALENDAR.json → ring، بعد تعديلات الأدمن المعتمدة) */
-    const CD = App.cal(), LD = App.leader();
-    const DEPT = CD.depts.find(d => d.k === LD.dept) || CD.depts.find(d => d.k === CD.def);
-    DEPT.ring.forEach((x, i) => H[i].ex = x);
-    const tx = (k, m) => App.tx(k, LD.gender, m);
-    const W = App.wk(1, LD.gender), INTRO = { title: W.title, p1: W.intro.p1, p2: W.intro.p2 };   /* الخطوة 0 */
-    const T = { exK: 'مثال من أعمالك', next: 'التالي', prev: 'السابق', go: 'تابع', now: 'الحاضر', fut: 'المستقبل',
-      of: n => `الأفق ${['الأول', 'الثاني', 'الثالث'][n - 1]} من ثلاثة`,
-      say: [INTRO.title + '. ' + INTRO.p1 + ' ' + INTRO.p2,
-        'الأفق الأول، اليوم: ' + H[0].name + '. يملأ الحلقة كلها.' + ' مثال من أعمالك: ' + H[0].ex + '.',
-        'الأفق الثاني، فرص مجاورة: ' + H[1].name + '. يأخذ نحو ثلث الحلقة من جهة الشمال.' + ' مثال من أعمالك: ' + H[1].ex + '.',
-        'الأفق الثالث، المستقبل: ' + H[2].name + '. يأخذ عُشر الحلقة عند الشمال.' + ' مثال من أعمالك: ' + H[2].ex + '.',
-        tx('w1.intro.4', 'الأفق الأول هو الحاضر، والأفقان الثاني والثالث معًا هما المستقبل.')] };
+    const LD = App.leader(), W = App.wk(1, LD.gender), IN = W.intro || {}, HZ = IN.hz || {};
+    const HS = ['h1', 'h2', 'h3'].map(k => HZ[k] || {});
+    const T = { next: 'التالي', prev: 'السابق', go: 'ابدأ السؤالين' };
     const arrow = I('<path d="M15 5l-7 7 7 7"/>', 18);
-    const IC = { now: I('<path d="M12 22V10"/><path d="M12 10C10 7 6.5 6.4 3.5 8"/><path d="M12 10c2-3 5.5-3.6 8.5-2"/><path d="M12 10C11 6.6 8.6 4.4 5.6 3.8"/><path d="M12 10c1-3.4 3.4-5.6 6.4-6.2"/><path d="M10.2 12.6h3.6M10.6 14.6h2.8"/><path d="M8 22h8"/>', 24),
-      fut: I('<path d="M12 21v-8"/><path d="M12 13c0-4 3-6 7-6 0 4-3 6-7 6z"/><path d="M12 15c0-3-2.5-5-6-5 0 3 2.5 5 6 5z"/><path d="M8 21h8"/>', 24) };
-    let step = opts.step >= 0 && opts.step <= 4 ? opts.step : 0;   /* 0 = مقدمة النشاط */
+    const check = '<svg width="18" height="14" viewBox="0 0 22 16" aria-hidden="true"><path d="M5 8.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const LAST = 4;
+    let step = opts.step >= 0 && opts.step <= LAST ? opts.step : 0;
 
-    /* ---- الحلقة: الكشف بالدوران فقط (transform) ---- */
-    const R = 91, A2 = 108, A3 = 36;
-    const bz = Bezel.mount($('#bezel'), { layout: false }); bz.state('idle');
-    const arc = (cls, deg, startDeg) => `<circle class="a ${cls}" r="${R}" pathLength="360" stroke-dasharray="${deg} ${360 - deg + .01}" transform="rotate(${startDeg - 90})"/>`;
-    const sep = (a, k) => { const r = a * Math.PI / 180, s = Math.sin(r), c = -Math.cos(r); return `<line class="x-sep" data-s="${k}" x1="${(s * 82).toFixed(2)}" y1="${(c * 82).toFixed(2)}" x2="${(s * 100).toFixed(2)}" y2="${(c * 100).toFixed(2)}"/>`; };
-    let ticks = ''; for (let a = 0; a < 360; a += 10) { const r = a * Math.PI / 180, s = Math.sin(r), c = -Math.cos(r), r0 = a % 30 ? 95 : 91; ticks += `<line class="x-tick" x1="${(s * r0).toFixed(2)}" y1="${(c * r0).toFixed(2)}" x2="${(s * 99).toFixed(2)}" y2="${(c * 99).toFixed(2)}"/>`; }
-    const brArc = (a0, a1, r) => { const p = a => { const t = a * Math.PI / 180; return `${(Math.sin(t) * r).toFixed(2)} ${(-Math.cos(t) * r).toFixed(2)}`; }; return `M${p(a0)}A${r} ${r} 0 ${Math.abs(a1 - a0) > 180 ? 1 : 0} 1 ${p(a1)}`; };
-    $('#bezel').insertAdjacentHTML('beforeend', `<svg class="x-donut" viewBox="-112 -112 224 224" focusable="false"><defs><linearGradient id="futg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FFA168"/><stop offset="1" stop-color="#B98BEF"/></linearGradient></defs>
-  <circle class="a x-a1" r="${R}"/>
-  ${arc('x-a2', A2, -A2)}${arc('x-a3', A3, -A3)}
-  <g class="x-rot" id="cov3">${arc('x-cov3', A3 + 2, -A3 - 1)}</g>
-  <g class="x-rot" id="cov2">${arc('x-cov2', A2 + 2, -A2 - 1)}</g>
-  <path class="x-dim" id="dim1" d="${brArc(1, 360 - A2 - 1, R)}"/><path class="x-dim" id="dim2" d="${brArc(-A2 + 1, -A3 - 1, R)}"/>
-  ${ticks}
-  <path class="x-hl" id="hl" d=""/>
-  ${sep(0, 0)}${sep(-A3, 3)}${sep(-A2, 2)}
-  <g class="x-rot" id="n1"><text class="x-num" data-h="1" x="0" y="${-R}">1</text></g>
-  <g class="x-rot" id="n2"><text class="x-num" data-h="2" x="0" y="${-R}">2</text></g>
-  <g class="x-rot" id="n3"><text class="x-num" data-h="3" x="0" y="${-R}">3</text></g>
-  <path class="x-br now" d="${brArc(6, 360 - A2 - 3, 106)}"/><path class="x-br fut" d="${brArc(-A2 + 3, -6, 106)}"/>
-</svg>`);
-    const NUM = [[null, null, null], [180, null, null], [126, -54, null], [126, -72, -18], [126, -72, -18]];
-    function setRot(id, deg, onn) { const g = hostEl.querySelector('#' + id); g.style.transform = `rotate(${deg}deg)`; if (onn != null) g.style.opacity = onn ? 1 : 0;
-      const t = g.querySelector('text'); if (t) t.style.transform = `rotate(${-deg}deg)`; }
-    function paint() {
-      setRot('cov2', step >= 2 ? -A2 : 0);
-      setRot('cov3', step >= 3 ? -A3 : 0);
-      const N = NUM[step];
-      [1, 2, 3].forEach(k => { const a = N[k - 1]; setRot('n' + k, a == null ? (k === 1 ? 180 : -A3 / 2) : a, a != null); });
-      $$('.x-sep').forEach(l => { const k = +l.dataset.s; l.style.opacity = (k === 0 ? step >= 2 : k === 2 ? step >= 2 : step >= 3) ? 1 : 0; });
-      const HL = ['', brArc(0.5, 359.5, 101.5), brArc(-A2 + 1, -1, 101.5), brArc(-A3 + 1, -1, 101.5), '']; $('#hl').setAttribute('d', HL[step] || '');
-      $('#lblFut').innerHTML = `<i></i>${IC.fut}<span>${esc(T.fut)}</span>`; $('#lblNow').innerHTML = `<i></i>${IC.now}<span>${esc(T.now)}</span>`;
-      $('#lblFut').classList.toggle('on', step === 4); $('#lblNow').classList.toggle('on', step === 4);
-      $('#bezel').classList.toggle('is-final', step === 4); $('#ringUI').classList.toggle('is-final', step === 4);
-    }
+    /* اللوحات الخمس في خلية واحدة متراكبة: البطاقة تأخذ ارتفاع أطولها، فيبقى مقاسها واحدًا في كل الخطوات */
+    const panel = (i, html) => `<div class="x-p" data-s="${i}">${html}</div>`;
+    const P = [
+      panel(0, `<h2 class="x-h" tabindex="-1">${esc(IN.head || W.title)}</h2>
+        <p class="x-lead">${esc(IN.p1 || '')}</p><p class="x-body">${esc(IN.p2 || '')}</p>
+        ${IN.note1 ? `<p class="x-note">${check}<span><b>${esc(IN.note1)}</b> ${esc(IN.note2 || '')}</span></p>` : ''}`),
+      panel(1, `<h2 class="x-h" tabindex="-1">${esc(HZ.head || '')}</h2><p class="x-lead">${esc(HZ.lead || '')}</p>
+        <ul class="x-legend">${HS.map((h, i) => `<li><i data-k="${i + 1}"></i><span>${esc(h.k || '')}: ${esc(h.name || '')}</span></li>`).join('')}</ul>`),
+      ...HS.map((h, i) => panel(i + 2, `<p class="x-k" data-k="${i + 1}"><i></i>${esc(h.k || '')}</p>
+        <h2 class="x-h" tabindex="-1">${esc(h.name || '')}</h2><p class="x-lead">${esc(h.def || '')}</p>
+        <p class="x-exk">${esc(HZ.exK || 'أمثلة')}</p><ul class="x-ex">${['ex1', 'ex2', 'ex3', 'ex4'].map(e => h[e] ? `<li>${esc(h[e])}</li>`: '').join('')}</ul>`))];
+    $('#panels').innerHTML = P.join('');
+    const say = i => { const p = $(`.x-p[data-s="${i}"]`); return p ? p.textContent.replace(/\s+/g, ' ').trim() : ''; };
 
-    /* ---- الهندسة: الحلقة في وسط المساحة بين الشعار والأزرار ---- */
-    function layout() {
-      const vw = innerWidth, vh = innerHeight, wide = WIDE.matches, tt = $('.x-title').getBoundingClientRect(), top = tt.bottom + (wide ? 20 : 14), foot = $('#foot').offsetHeight || 110, bot = vh - foot - (wide ? 24 : 12);
-      const LBL = wide ? 0 : 46;
-      const d = Math.round(Math.min(wide ? 600 : 370, (vw - (wide ? 0 : 10)) / 1.1, (bot - top - 2 * LBL) / 1.1)), cx = Math.round(vw / 2), cy = Math.round((top + bot) / 2);
-      root.style.setProperty('--d', d + 'px'); root.style.setProperty('--cx', cx + 'px'); root.style.setProperty('--cy', cy + 'px');
-      const f = $('#lblFut'), n = $('#lblNow'), r = d * 0.56;
-      if (wide) {
-        const at = (el, deg, dx) => { const t = deg * Math.PI / 180; el.style.left = (cx + Math.sin(t) * (r + dx)) + 'px'; el.style.top = (cy - Math.cos(t) * (r + dx)) + 'px'; };
-        at(f, -52, 90); at(n, 128, 80);
-      } else {
-        f.style.left = (cx - d * 0.26) + 'px'; f.style.top = (cy - r - LBL / 2 - 2) + 'px';
-        n.style.left = (cx + d * 0.24) + 'px'; n.style.top = (cy + r + LBL / 2 + 2) + 'px';
-      }
-    }
-    const inner = $('#inner'), foot = $('#foot');
-    function innerHTML() {
-      if (step === 0) return `<p class="b-vh" id="h" tabindex="-1">${esc(T.say[0])}</p>`;
-      if (step === 4) return `<div class="x-legend b-rise" style="--i:0" aria-hidden="true"><span class="x-sw" data-h="1">1</span><span class="x-bar"></span><span class="x-sw" data-h="2">2</span><span class="x-sw" data-h="3">3</span></div>
-    <p class="b-vh" id="h" tabindex="-1">${esc(T.say[4])}</p>`;
-      const h = H[step - 1];
-      return `<p class="x-k b-rise" style="--i:0"><span class="x-sw" data-h="${step}" aria-hidden="true">${step}</span><span>${esc(h.k)} · ${esc(h.when)}</span></p>
-    <h2 class="x-name b-rise" style="--i:1" id="h" tabindex="-1">${esc(h.name)}</h2>
-    <p class="x-exk b-rise" style="--i:2">${esc(T.exK)}</p><p class="x-ex b-rise" style="--i:2">${esc(h.ex)}</p>`;
-    }
     function footHTML() {
-      const last = step === 4;
-      return `<span class="x-dots" aria-hidden="true">${[0, 1, 2, 3, 4].map(n => `<i class="${n === step ? 'now' : n < step ? 'on' : ''}"></i>`).join('')}</span>
-    <div class="x-row">${last
+      const last = step === LAST;
+      return `<div class="x-row">${last
         ? `<button class="b-btn" data-primary type="button" data-act="go"><span class="t">${esc(T.go)}</span></button>`
         : `<button class="b-btn b-btn--quiet x-next" type="button" data-act="next"><span class="t">${esc(T.next)}</span>${arrow}</button>`}
     <button class="b-btn x-prev" type="button" data-act="prev"${step === 0 ? ' hidden' : ''}><span class="t">${esc(T.prev)}</span></button></div>`;
     }
-    const xi = $('#xintro');
     function draw(anim) {
-      root.classList.toggle('is-intro', step === 0); xi.hidden = step !== 0;
-      xi.querySelector('[data-r=title]').textContent = INTRO.title; xi.querySelector('[data-r=p1]').textContent = INTRO.p1; xi.querySelector('[data-r=p2]').textContent = INTRO.p2;
-      inner.innerHTML = innerHTML(); foot.innerHTML = footHTML();
-      if (anim) { inner.classList.remove('b-stepin'); inner.offsetWidth; inner.classList.add('b-stepin'); later(() => inner.classList.remove('b-stepin'), 420); }
+      $('#xcard').dataset.step = step;   /* التقويم يتلوّن بالـ CSS حسب الخطوة */
+      hostEl.querySelectorAll('.x-p').forEach(p => { const onn = +p.dataset.s === step; p.classList.toggle('on', onn); p.inert = !onn; p.setAttribute('aria-hidden', String(!onn)); });
+      $('#foot').innerHTML = footHTML();
+      $('#journey').innerHTML = App.journey(step === 0 ? 0 : 1, step === 0 || step === LAST);
+      if (anim) { const p = $('.x-p.on'); p.classList.remove('b-stepin'); p.offsetWidth; p.classList.add('b-stepin'); later(() => p.classList.remove('b-stepin'), 420); }
     }
-    /* لا انتقال إلا بفعل مقصود: نتجاهل اللمسة التي تصل خلال 600ms من فتح الشاشة أو من آخر انتقال (اللمسة المزدوجة على زر في المكان نفسه) */
-    let readyAt = performance.now() + 600;
+    /* لا انتقال إلا بفعل مقصود: نتجاهل لمسة الإصبع/الفأرة خلال 600ms من فتح الشاشة أو 450ms من آخر انتقال (اللمسة المزدوجة)؛ لوحة المفاتيح لا تُحجب */
+    let readyAt = performance.now() + 600, left = false;
     function go(n, how) {
-      if (n < 0 || n > 4 || n === step) return;
-      if (performance.now() < readyAt) return;
+      if (n < 0 || n > LAST || n === step) return;
+      if (how !== 'key' && performance.now() < readyAt) return;
       readyAt = performance.now() + 450;
       const fromKey = document.activeElement && document.activeElement.dataset && document.activeElement.dataset.act;
-      step = n; draw(true); paint();
-      $('#live').textContent = T.say[step];
-      if (RM.matches) $('.x-donut').animate([{ opacity: .4 }, { opacity: 1 }], { duration: 180, easing: 'linear' });
-      const target = step === 4 ? $('[data-act=go]') : (fromKey === 'prev' && step > 1 ? $('[data-act=prev]') : $('[data-act=next]'));
+      step = n; draw(true);
+      $('#live').textContent = say(step);
+      const target = step === LAST ? $('[data-act=go]') : (fromKey === 'prev' && step > 0 ? $('[data-act=prev]') : $('[data-act=next]'));
       if (how !== 'key' || fromKey) target.focus({ preventScroll: true });
     }
-    on(document, 'click', e => { const a = e.target.closest('[data-act]'); if (!a || !hostEl.contains(a)) return; const k = a.dataset.act;
-      if (k === 'next') go(step + 1); else if (k === 'prev') go(step - 1); else if (k === 'go') { if (performance.now() < readyAt) return; readyAt = Infinity; App.show('activity', { week: 1 }, 'push'); } });
+    on(document, 'click', e => { const a = e.target.closest('[data-act]'); if (!a || !hostEl.contains(a)) return; const k = a.dataset.act, how = e.detail > 0 ? 'tap' : 'key';
+      if (k === 'next') go(step + 1, how); else if (k === 'prev') go(step - 1, how);
+      else if (k === 'go') { if (left || (how !== 'key' && performance.now() < readyAt)) return; left = true; App.show('activity', { week: 1 }, 'push'); } });
     on(document, 'keydown', e => {
+      if (e.target.closest && e.target.closest('input,textarea')) return;
       if (e.key === 'ArrowLeft') { e.preventDefault(); go(step + 1, 'key'); } else if (e.key === 'ArrowRight') { e.preventDefault(); go(step - 1, 'key'); } });
-    function still() { root.classList.add('x-still'); layout(); paint(); root.offsetWidth; requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('x-still'))); }
-    let rt = 0; on(window, 'resize', () => { clearTimeout(rt); rt = setTimeout(still, 60); });
 
-    draw(false); still();
-    if (!opts.seen) { root.classList.add('b-enter'); later(() => root.classList.remove('b-enter'), 1300); }
-    if (opts.seen) { const b = $(step === 4 ? '[data-act=go]' : '[data-act=next]'); if (b) b.focus({ preventScroll: true }); }
-    return { destroy() { ac.abort(); clearTimeout(rt); timers.forEach(clearTimeout); bz.destroy(); root.classList.remove('is-intro'); hostEl.innerHTML = ''; } };
+    draw(false);
+    if (!opts.seen && !RM.matches) { root.classList.add('b-enter'); later(() => root.classList.remove('b-enter'), 1300); }
+    if (opts.seen) { const b = $(step === LAST ? '[data-act=go]' : '[data-act=next]'); if (b) b.focus({ preventScroll: true }); }
+    else { const h = $('.x-p.on .x-h'); if (h) h.focus({ preventScroll: true }); }
+    return { destroy() { ac.abort(); timers.forEach(clearTimeout); hostEl.innerHTML = ''; } };
   }
 
   window.BoslaViews.intro = {
@@ -2365,6 +2357,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
 </defs></svg>`;
   const MARKUP = n => `${n === 2 ? DEFS : ''}<div class="b-photo" aria-hidden="true"></div>
 <header class="b-top"><span class="b-plate" id="plate"></span><span class="b-brand">بوصلة القائد</span></header>
+<div id="journey"></div>
 <main id="app"></main>
 <div class="x-foot" id="foot"></div>
 <p class="b-vh" id="live" aria-live="polite" aria-atomic="true"></p>`;
@@ -2388,7 +2381,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
     /* ---------- القائد والنصوص ---------- */
     const LD = App.leader(), C = App.wk(n, LD.gender);
     document.title = 'بوصلة القائد · ' + (n === 1 ? App.weekLabel(1) : C.title);
-    const SCREENS = n === 1 ? ['q1', 'q2', 'result'] : n === 4 ? ['ask', 'done'] : ['intro', 'q1', 'q2', 'result'];
+    const SCREENS = n === 1 ? ['q1', 'q2', 'result', 'try'] : n === 4 ? ['ask', 'done'] : ['intro', 'q1', 'q2', 'result'];
     const ck = '<svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
     const arrow = I('<path d="M15 5l-7 7 7 7"/>', 18);
 
@@ -2398,7 +2391,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
     /* ---------- المنطق (كما في التصاميم المعتمدة) ---------- */
     function getResult(q1, q2) {
       if (!q1 || !q2) return null;   /* لا نتيجة قبل الإجابتين */
-      if (n === 1) { const d = C.diagnoses[q1], sc = C.sector[q2]; if (!d || !sc) return null; return { diagnosisTitle: d.title, diagnosisDescription: d.description, sectorLine: sc, weeklyExperiment: d.experiment }; }
+      if (n === 1) { const d = C.diagnoses[q1], sc = (C.special && C.special[q1 + q2]) || C.sector[q2]; if (!d || !sc) return null; return { diagnosisTitle: d.title, diagnosisDescription: d.description, sectorLine: sc }; }   /* القراءة من س2، وحالتان خاصتان (special) */
       if (n === 2) { const d = C.diagnoses[q2], o = C.observations[q1]; if (!d || !o) return null; return { diagnosisTitle: d.title, diagnosisDescription: d.description, teamObservationTitle: o.title, teamObservationDescription: o.description, weeklyExperiment: d.experiment }; }
       const d = C.diagnoses[q2]; if (!d) return null; return { diagnosisTitle: d.title, diagnosisDescription: d.description, weeklyExperiment: d.experiment };
     }
@@ -2421,15 +2414,21 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
 
     /* ---------- الشاشات (من التصاميم) ---------- */
     const dis = () => ro ? ' disabled' : '';
+    /* الأسبوع الأول، س1: اسم المسار قبل النقطتين بخط أثقل، ومعه لون المسار كما في التعريف */
+    function optText(k, x, t) {
+      const i = t.indexOf(':');
+      if (n !== 1 || k !== 1 || i < 0) return esc(t);
+      return `<i class="q-hz" data-k="${KEYS.indexOf(x) + 1}" aria-hidden="true"></i><b>${esc(t.slice(0, i))}:</b>${esc(t.slice(i + 1))}`;
+    }
     function question(k) {
       const Q = C['q' + k], cur = k === 1 ? st.q1 : st.q2;
       const show = k === 1 && st.seen && hasResult();
       const lbl = Q.label ? `<p class="q-lead" id="k${k}">${esc(Q.label)}</p>` : '';
       return `<section class="q-scr" data-screen="q${k}"><div class="q-col">
     <div class="q-head b-spot b-rise" style="--i:0">${lbl}
-      <h1 class="q-title" id="h" tabindex="-1">${esc(Q.question)}</h1></div>
+      <h1 class="q-title" id="h" tabindex="-1">${esc(Q.question)}</h1>${Q.hint ? `<p class="q-hint" id="hint${k}">${esc(Q.hint)}</p>` : ''}</div>
     <fieldset class="q-opts b-rise" style="--i:1" role="radiogroup" aria-labelledby="${Q.label ? `k${k} h` : 'h'}">${KEYS.map(x =>
-      `<label class="q-opt"><input type="radio" name="q${k}" value="${x}"${cur === x ? ' checked' : ''}${dis()}><span class="t">${esc(Q.options[x])}</span>${ck}</label>`).join('')}</fieldset>
+      `<label class="q-opt"><input type="radio" name="q${k}" value="${x}"${cur === x ? ' checked' : ''}${dis()}><span class="t">${optText(k, x, Q.options[x])}</span>${ck}</label>`).join('')}</fieldset>
     ${show ? `<button type="button" class="b-link w-show b-rise" style="--i:2" data-act="show">${esc(C.labels.showResult)}</button>` : ''}
   </div></section>`;
     }
@@ -2447,15 +2446,29 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
     <div><h1 class="b-display" id="h" tabindex="-1">${esc(C.title)}</h1>
     <p class="b-lead">${esc(C.intro.p1)}</p><p class="b-body">${esc(C.intro.p2)}</p></div></div></section>`;
     }
+    /* الأسبوع الأول: «جرّب هذا الأسبوع» صفحة أخيرة واحدة للجميع، بزر رجوع إلى النتيجة */
+    function tryHTML() {
+      const T = C.tryOut || {}, L = C.labels;
+      return `<section class="q-scr w-result w-tryp" data-screen="try"><div class="q-card b-glass b-rise w-res" style="--i:0">
+    <h1 class="b-result-name w-try-h" id="h" tabindex="-1">${ICON.flag}<span>${esc(L.tryK)}</span></h1>
+    <p class="b-lead">${esc(T.p1 || '')}</p>
+    <p class="b-body">${esc(T.p2 || '')}</p>
+    <div class="w-wk" aria-hidden="true">${['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'].map((d, i) => `<div><span>${d}</span>${[0, 1, 2, 3].map(r => `<i${i === 2 && r === 1 ? ' class="me"' : ''}></i>`).join('')}</div>`).join('')}</div>
+    ${T.cap ? `<p class="w-wk-cap">${esc(T.cap)}</p>` : ''}
+    ${T.p3 ? `<p class="b-body">${esc(T.p3)}</p>` : ''}
+    <ul class="w-qs">${['i1', 'i2', 'i3'].filter(k => T[k]).map(k => `<li>${esc(T[k])}</li>`).join('')}</ul>
+    <p class="w-close">${esc(T.closing || '')}</p>
+  </div></section>`;
+    }
     function resultHTML() {
       const r = getResult(st.q1, st.q2), L = C.labels;
       const head = `<section class="q-scr w-result" data-screen="result" data-q1="${esc(st.q1)}" data-q2="${esc(st.q2)}"><div class="q-card b-glass b-rise w-res" style="--i:0">`;
       if (n === 1) return head + `
+    <p class="b-eyebrow" data-r="label">${esc(L.resultK)}</p>
     <h1 class="b-result-name" id="h" tabindex="-1" data-r="diagnosisTitle">${esc(r.diagnosisTitle)}</h1>
     <p class="b-body" data-r="diagnosisDescription">${esc(r.diagnosisDescription)}</p>
-    <p class="w-sec"><b data-r="sectorK">${esc(L.sectorK)}</b> <span data-r="sectorLine">${esc(r.sectorLine)}</span></p>
-    <section class="w-try" aria-labelledby="ek"><h2 class="w-k" id="ek" data-r="tryK">${ICON.flag}<span>${esc(L.tryK)}</span></h2>
-      <p data-r="weeklyExperiment">${esc(r.weeklyExperiment)}</p></section>
+    <section class="w-blk w-read" aria-labelledby="sk"><h2 class="w-k" id="sk" data-r="sectorK"><span>${esc(L.sectorK)}</span></h2>
+      <p data-r="sectorLine">${esc(r.sectorLine)}</p></section>
   </div></section>`;
       if (n === 2) return head + `
     <p class="b-eyebrow" data-r="label">${esc(L.resultK)}</p>
@@ -2496,6 +2509,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
       if (n === 4) return st.s === 'done' ? withAgain(w4HTML()) : w4HTML();
       if (st.s === 'intro') return introHTML();
       if (st.s === 'q1' || st.s === 'q2') return question(+st.s[1]);
+      if (st.s === 'try') return withAgain(tryHTML());
       return withAgain(resultHTML());
     }
     const autos = '<p class="b-status q-autos" id="autos" role="status"></p>';
@@ -2506,7 +2520,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
         : `${autos}<div class="x-row"><button class="b-btn" data-primary type="button" data-act="send"><span class="t">${esc(C.submit)}</span></button></div>`;
       const prog = (st.s === 'q1' || st.s === 'q2') ? `<span class="x-prog" role="img" aria-label="${st.s === 'q1' ? '١' : '٢'} / ٢"><i class="${st.s === 'q1' ? 'now' : 'on'}"></i><i class="${st.s === 'q2' ? 'now' : ''}"></i></span>` : '';
       let P, prev;
-      if (n === 1) { P = { q1: ['next', L.next], q2: ['show', L.showResult], result: null }[st.s]; prev = true; }
+      if (n === 1) { P = { q1: ['next', L.next], q2: ['show', L.showResult], result: ['try', L.tryBtn], try: ['finish', L.finish] }[st.s]; prev = true; }
       else if (n === 2) { P = st.s === 'result' ? null : (st.s === 'intro' && st.seen && hasResult()) ? ['show', L.showResult] : ['next', L.next]; prev = i > 0; }
       else { P = { intro: st.seen && hasResult() ? ['show', L.showResult] : ['next', L.start], q1: ['next', L.next], q2: ['show', L.showResult], result: ['finish', L.finish] }[st.s]; prev = i > 0 && st.s !== 'result'; }
       /* الأسبوع الثاني: النقاط الأربع كما في التصميم، والأول والثالث: مؤشر السؤالين */
@@ -2526,6 +2540,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
     function render(anim, focus) {
       if (st.s === 'result' && !hasResult()) st.s = st.q1 ? 'q2' : 'q1';   /* لا نتيجة قبل الإجابتين */
       app.innerHTML = build(); foot.innerHTML = footHTML(); paintStatus(); patch();
+      if (n === 1) $('#journey').innerHTML = App.journey(st.s === 'result' || st.s === 'try' ? 3 : 2, st.s === 'q2');   /* خريطة الرحلة أعلى الشاشة */
       if (anim) { app.classList.remove('b-stepin'); app.offsetWidth; app.classList.add('b-stepin'); later(() => app.classList.remove('b-stepin'), 420); }
       if (focus) { scrollTo(0, 0); const h = $('#h'); if (h) h.focus({ preventScroll: true }); }
       lampsRun();
@@ -2634,6 +2649,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
       if (k === 'send') return sendReply();
       if (k === 'restart') { a.disabled = true; ro = true; clearTimeout(saveT); App.restartWeek(n).catch(() => { a.disabled = false; setKind('server'); }); return; }
       if (k === 'more') { st.s = 'ask'; render(true, true); const t = $('#ta'); if (t) t.focus(); return; }
+      if (k === 'try') { go('try'); return; }   /* W1: من النتيجة إلى «جرّب هذا الأسبوع» */
       if (k === 'finish') { flush(); return App.home(); }   /* W3: إنهاء النشاط ← الرئيسية */
       if (k === 'show') { if (st.s === 'q2') return submitQA(); if (hasResult()) go('result'); return; }
       if (k === 'next') { const nx = SCREENS[i + 1]; if (nx === 'result') return submitQA(); go(nx); return; }
@@ -2823,7 +2839,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
     /* ما رآه القائد بالضبط: نصوص الأسبوع المعتمدة وقت إكماله، بجنسه، والمنطق نفسه في النشاط */
     const seenAt=(l,n,at)=>App.wk(n,l.gender,(k,g,def)=>TXK[k]?txtAt(k,at,g):def);
     function resultOf(n,S,q1,q2){if(!q1||!q2)return null;
-      if(n===1){const d=S.diagnoses[q1];return d&&{title:d.title,description:d.description,sector:S.sector[q2],experiment:d.experiment}}
+      if(n===1){const d=S.diagnoses[q1],T=S.tryOut||{};return d&&{title:d.title,description:d.description,sector:(S.special&&S.special[q1+q2])||S.sector[q2],experiment:d.experiment||[T.p1,T.p2,T.i1,T.i2,T.i3,T.closing].filter(Boolean).join(' ')}}
       const d=S.diagnoses[q2];if(!d)return null;const o=n===2?S.observations[q1]:null;
       return {title:d.title,description:d.description,experiment:d.experiment,obs:o}}
     /* اسم التشخيص في القائمة (بالنص المعتمد الآن) */
@@ -3147,7 +3163,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
   const clone = o => JSON.parse(JSON.stringify(o));
 
   /* ---------- الأسابيع الأربعة (نفس جدول الخادم) ---------- */
-  const SCHEDULE = [['2026-11-08', '2026-11-15'], ['2026-11-15', '2026-11-22'], ['2026-11-22', '2026-11-29'], ['2026-11-29', '2026-12-06']]
+  const SCHEDULE = [['2026-11-04', '2026-11-15'], ['2026-11-15', '2026-11-22'], ['2026-11-22', '2026-11-29'], ['2026-11-29', '2026-12-06']]
     .map(([o, c], i) => ({ week: i + 1, opensAt: Date.parse(o + 'T00:00:00+03:00'), closesAt: Date.parse(c + 'T00:00:00+03:00') }));
   const WEEK_LABEL = ['الأسبوع الأول', 'الأسبوع الثاني', 'الأسبوع الثالث', 'الأسبوع الأخير'];
   const MONTHS = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
@@ -3366,7 +3382,17 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
     if (s.screen === 'home' && s.leader && s.token && weekFor !== s.token) loadWeek(false).catch(() => {});
   }
 
-  window.App = { cfg: CFG, defaults: DEFAULTS, api, auth, tx, cal, wk, wkTexts, wkDefaults, leader, loadWeek, openWeek, openWeekN, restartWeek, home, show, adminApi, adminOut,
+  /* خريطة رحلة الأسبوع الأول (اعتمدها نادر 4 نوفمبر): أعلى الشاشة، أربع محطات. stage = المحطة الحالية،
+     hint = true في آخر خطوة من المحطة فتتلوّن المحطة التالية (الانتقال إلى إجراء جديد) */
+  const JOURNEY = ['التعريف', 'المسارات الثلاثة', 'سؤالان', 'نتيجتك'];
+  function journey(stage, hint) {
+    const ck = '<svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    return `<ol class="b-journey" aria-label="مراحل النشاط">${JOURNEY.map((t, i) => {
+      const c = i < stage ? 'done' : i === stage ? 'now' : (hint && i === stage + 1) ? 'next' : '';
+      return `<li class="${c}"${i === stage ? ' aria-current="step"' : ''}><b>${i < stage ? ck : i + 1}</b><span>${t}</span></li>`; }).join('')}</ol>`;
+  }
+
+  window.App = { journey, cfg: CFG, defaults: DEFAULTS, api, auth, tx, cal, wk, wkTexts, wkDefaults, leader, loadWeek, openWeek, openWeekN, restartWeek, home, show, adminApi, adminOut,
     now, stateOf, currentWeek, endDay, schedule: SCHEDULE, weekLabel: n => WEEK_LABEL[n - 1],
     get week() { return week; }, set week(w) { week = w; }, get view() { return viewName; }, data: DATA };
 
