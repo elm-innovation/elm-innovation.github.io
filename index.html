@@ -1754,7 +1754,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
   function t(key, vars) {
     let v = COPY[key];
     if (v == null) return key;
-    if (typeof v === 'object') v = v[(S.leader && S.leader.gender) || 'm'] || v.m;
+    if (typeof v === 'object') v = v.m;   /* النسخة موحّدة للجميع (5 نوفمبر) */
     vars = Object.assign({ name: S.leader ? S.leader.first : '' }, vars || {});
     return v.replace(/\{(\w+)\}/g, (_, k) => (vars[k] != null ? vars[k] : ''));
   }
@@ -3226,7 +3226,10 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
     if (persist) wj(localStorage, OVK, OV);
   }
   /* نص واحد: المعتمد إن وُجد (والمؤنث إن كُتب، وإلا نسخة القائد)، وإلا النص المدمج */
+  /* النسخة موحّدة للجميع (قرار نادر 5 نوفمبر): نص القائد لكل القادة والقائدات، والمؤنث المحفوظ لا يُعرض */
+  const UNI = true;
   function tx(key, g, m, f) {
+    if (UNI) g = 'm';
     const o = OV[key];
     if (o && o.m) return g === 'f' && o.f ? o.f : o.m;
     return g === 'f' && f != null ? f : m;
@@ -3268,6 +3271,7 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
   }
   /* نصوص الأسبوع n كما يراها القائد/القائدة الآن. pick(key, g, def) اختياري: للأدمن (النص المعتمد وقت الإكمال) */
   function wk(n, g, pick) {
+    if (UNI) g = 'm';
     const D = wkDefaults(n), out = clone(g === 'f' ? D.f : D.m);
     leaves(D.m, [], []).forEach(p => {
       const k = keyOf(n, p), def = getP(out, p);
