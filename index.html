@@ -3438,8 +3438,12 @@ window.BOSLA_DATA={CALENDAR:{"def":"hu-tech","depts":[{"k":"gdps-sales","ar":"ا
       const vh = window.innerHeight;
       let t = 0;
       hostEl.querySelectorAll('.b-top, .b-journey').forEach(e => { const r = e.getBoundingClientRect(); if (r.height) t = Math.max(t, r.bottom); });
-      const f = hostEl.querySelector('.x-foot .x-row');
-      const b = f ? vh - f.getBoundingClientRect().top : 0;
+      /* أعلى عنصر ظاهر في التذييل: الأزرار، أو شريط التقدم، أو سطر «حُفظ» فوقها */
+      let ft = vh;
+      hostEl.querySelectorAll('.x-foot .x-row, .x-foot .x-prog, .x-foot .x-dots, .x-foot .q-autos, .x-foot #autos').forEach(e => {
+        const r = e.getBoundingClientRect(), cs = getComputedStyle(e);
+        if (r.height && cs.display !== 'none' && cs.visibility !== 'hidden') ft = Math.min(ft, r.top); });
+      const b = vh - ft;
       root.style.setProperty('--band-t', Math.round(t) + 'px');
       root.style.setProperty('--band-b', Math.round(b) + 'px');
       more();
